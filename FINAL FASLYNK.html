@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FASLYNK — Right Buyer, Right Price, Right Choice</title>
+<style>
+:root{
+  --green:#2e7d32; --green-dark:#1b5e20; --green-light:#e8f5e9;
+  --amber:#f9a825; --bg:#fbfaf6; --card:#ffffff; --text:#1c2b1f; --muted:#5c6b5e;
+  --border:#dfe6df;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12180f; --card:#1a2216; --text:#eef2ea; --muted:#9fb0a1; --border:#2b362a; --green-light:#1e2d1c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12180f; --card:#1a2216; --text:#eef2ea; --muted:#9fb0a1; --border:#2b362a; --green-light:#1e2d1c;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
+*{box-sizing:border-box;}
+body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;}
+header{position:sticky;top:0;z-index:10;background:var(--green-dark);color:#fff;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.25rem;cursor:pointer;}
+.brand-sub{font-size:.55rem;font-weight:400;opacity:.8;letter-spacing:.3px;}
+.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.role-toggle{display:flex;background:rgba(255,255,255,.15);border-radius:20px;padding:3px;gap:2px;}
+.role-toggle button{background:transparent;border:none;color:#fff;padding:6px 12px;border-radius:16px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+.role-toggle button.active{background:#fff;color:var(--green-dark);}
+.tagline{font-size:.75rem;opacity:.85;margin-top:2px;}
+.about-link{font-size:.68rem;opacity:.75;margin-top:2px;background:none;border:none;color:#fff;text-decoration:underline;cursor:pointer;padding:0;}
+#lang-select{width:auto;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);padding:6px 10px;border-radius:8px;font-size:.8rem;}
+#lang-select option{color:#000;}
+.quick-add-btn{background:var(--amber);color:#3a2900;border:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer;white-space:nowrap;}
+nav{display:flex;gap:6px;margin-top:10px;overflow-x:auto;}
+nav button{position:relative;background:rgba(255,255,255,.12);border:none;color:#fff;padding:8px 14px;border-radius:20px;font-size:.85rem;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+nav button.active{background:var(--amber);color:#3a2900;font-weight:700;}
+.nav-ic{font-size:1rem;line-height:1;}
+.badge-count{position:absolute;top:1px;right:4px;background:#e53935;color:#fff;font-size:.6rem;font-weight:800;border-radius:8px;min-width:16px;height:16px;line-height:16px;text-align:center;padding:0 2px;display:none;}
+main{max-width:900px;margin:0 auto;padding:20px 16px 48px;}
+.section{display:none;}
+.section.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.hero{background:var(--green-light);border-radius:16px;padding:28px 20px;text-align:center;}
+.hero-icon{font-size:2.6rem;line-height:1;margin-bottom:8px;}
+.hero h1{margin:0 0 8px;color:var(--green-dark);font-size:1.5rem;}
+.hero p{color:var(--muted);margin:0 auto;max-width:52ch;font-size:.95rem;}
+.hero-ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px;}
+.btn-outline{background:transparent;color:var(--green-dark);border:2px solid var(--green);}
+.btn-outline:hover{background:rgba(46,125,50,.08);}
+.pill{display:inline-block;background:var(--amber);color:#3a2900;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700;margin-top:12px;}
+#home .card{text-align:center;transition:transform .15s ease, box-shadow .15s ease;}
+#home .card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.08);}
+#home .card h3{font-size:1rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.card h3{margin:0 0 6px;color:var(--green);font-size:1rem;}
+.card p{margin:0;color:var(--muted);font-size:.88rem;}
+label{display:block;font-size:.82rem;font-weight:600;margin:12px 0 4px;}
+select,input{width:100%;padding:11px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:16px;min-height:46px;}
+.btn{background:var(--green);color:#fff;border:none;padding:13px 20px;border-radius:8px;font-weight:700;cursor:pointer;margin-top:14px;font-size:.95rem;min-height:48px;width:100%;}
+.btn:hover{background:var(--green-dark);}
+.result{margin-top:18px;padding:14px;border-radius:10px;background:var(--green-light);border:1px dashed var(--green);display:none;}
+.result.show{display:block;}
+.price{font-size:1.6rem;font-weight:800;color:var(--green-dark);}
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;min-width:480px;border-collapse:collapse;margin-top:10px;font-size:.85rem;}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);}
+th{color:var(--muted);font-size:.75rem;text-transform:uppercase;}
+.up{color:#2e7d32;font-weight:700;} .down{color:#c62828;font-weight:700;}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.72rem;font-weight:700;white-space:nowrap;}
+.badgeA{background:#c8e6c9;color:#1b5e20;} .badgeB{background:#fff9c4;color:#7a6a00;} .badgeC{background:#ffccbc;color:#8a3300;}
+.listing{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:10px;background:var(--card);}
+.listing .info b{display:block;}
+.listing .info span{color:var(--muted);font-size:.8rem;}
+.bar-row{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.8rem;}
+.bar-track{flex:1;background:var(--border);border-radius:6px;height:14px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--green);border-radius:6px;}
+footer{text-align:center;color:var(--muted);font-size:.75rem;padding:20px;}
+
+.muted{color:var(--muted);}
+.greet-card{background:var(--green-light);border-radius:16px;padding:20px;}
+.greet-card h2{margin:0 0 6px;color:var(--green-dark);font-size:1.2rem;}
+.greet-card p{margin:0 0 10px;color:var(--muted);font-size:.9rem;}
+.greet-checks{display:flex;flex-wrap:wrap;gap:14px;font-size:.82rem;color:var(--green-dark);font-weight:600;margin-bottom:2px;}
+
+.cat-row{display:flex;justify-content:space-between;align-items:center;margin-top:22px;margin-bottom:8px;}
+.cat-row span{font-size:.82rem;}
+.cat-pills{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;}
+.cat-pill{flex:0 0 auto;background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:20px;font-size:.82rem;cursor:pointer;white-space:nowrap;}
+.cat-pill.active{background:var(--green);color:#fff;border-color:var(--green);font-weight:700;}
+.search-box{margin-top:12px;}
+
+.crop-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px;}
+.crop-head{display:flex;gap:12px;align-items:flex-start;}
+.crop-thumb{width:60px;height:60px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0;}
+.crop-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.crop-name-row b{font-size:1rem;}
+.crop-sub{color:var(--muted);font-size:.8rem;margin-top:2px;}
+.crop-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px;background:var(--bg);border-radius:10px;padding:10px 4px;}
+.crop-stats div{text-align:center;}
+.crop-stats .label{font-size:.62rem;color:var(--muted);text-transform:uppercase;}
+.crop-stats .value{font-weight:800;margin-top:2px;font-size:.92rem;}
+.crop-stats .mandi-val{color:var(--muted);text-decoration:line-through;font-weight:600;}
+.crop-stats .offer-val{color:var(--green-dark);font-size:1.02rem;}
+.profit-banner{margin-top:10px;background:var(--green-light);color:var(--green-dark);border-radius:8px;padding:8px 10px;font-size:.8rem;font-weight:700;text-align:center;}
+.profit-banner.neutral{background:var(--bg);color:var(--muted);font-weight:600;}
+.profit-banner.deal{background:#fff9c4;color:#7a6a00;}
+.crop-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap;}
+.link-btn{background:none;border:none;color:var(--green-dark);font-weight:700;font-size:.8rem;cursor:pointer;padding:6px 0;}
+.pill-btn{background:var(--green);color:#fff;border:none;padding:9px 16px;border-radius:8px;font-weight:700;font-size:.8rem;cursor:pointer;}
+.crop-detail{margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:.8rem;color:var(--muted);display:none;}
+.crop-detail.show{display:block;}
+
+.offer-group{margin-top:16px;}
+.offer-group h4{margin:0 0 8px;font-size:.95rem;}
+.offer-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px;border:1px solid var(--border);border-radius:10px;margin-top:8px;background:var(--card);}
+.offer-row .buyer-info b{display:block;}
+.offer-row .buyer-info span{color:var(--muted);font-size:.78rem;}
+.offer-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.offer-actions button{padding:8px 12px;border-radius:8px;border:none;font-size:.78rem;font-weight:700;cursor:pointer;}
+.accept-btn{background:var(--green);color:#fff;}
+.reject-btn{background:#ffe1e1;color:#b71c1c;}
+
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.stat-card .num{font-size:1.25rem;font-weight:800;color:var(--green-dark);}
+.stat-card .lbl{font-size:.72rem;color:var(--muted);margin-top:2px;}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:flex-start;justify-content:center;padding:20px 12px;overflow-y:auto;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:var(--card);border-radius:16px;max-width:480px;width:100%;padding:20px;position:relative;margin-top:20px;margin-bottom:40px;}
+.modal-close{position:absolute;top:12px;right:12px;background:var(--border);border:none;color:var(--text);width:32px;height:32px;border-radius:50%;font-size:1rem;cursor:pointer;}
+.photo-upload-row{display:flex;align-items:center;gap:12px;margin-top:6px;}
+.photo-preview{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid var(--border);background:var(--bg);flex-shrink:0;display:none;}
+.photo-preview.show{display:block;}
+.photo-hint{font-size:.72rem;color:var(--muted);margin-top:4px;}
+.field-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.field-row2 label{margin-bottom:0;}
+#login-lang-row{display:flex;justify-content:center;margin-bottom:14px;}
+#login-lang-select{width:auto;min-height:38px;padding:6px 10px;font-size:.82rem;}
+
+.toast{position:fixed;left:50%;top:calc(72px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:var(--green-dark);color:#fff;padding:10px 18px;border-radius:30px;font-size:.85rem;z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;max-width:90vw;text-align:center;}
+.toast.show{opacity:1;}
+
+#login-screen{position:fixed;inset:0;z-index:500;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px 16px;overflow-y:auto;}
+.login-box{max-width:420px;width:100%;}
+.login-brand{text-align:center;margin-bottom:20px;}
+.login-tabs{display:flex;background:var(--green-light);border-radius:12px;padding:4px;gap:4px;margin-bottom:14px;}
+.login-tabs button{flex:1;background:transparent;border:none;padding:10px;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer;color:var(--green-dark);}
+.login-tabs button.active{background:var(--green);color:#fff;}
+.logout-btn{background:rgba(255,255,255,.18);color:#fff;border:none;padding:8px 10px;border-radius:8px;font-size:.85rem;cursor:pointer;}
+
+/* Phone-friendly layout: bottom tab bar navigation like a mobile app */
+@media (max-width: 680px){
+  header{padding-left:14px;padding-right:14px;}
+  .brand{font-size:1.1rem;}
+  main{padding:16px 12px 100px;}
+  nav{
+    position:fixed; left:0; right:0; bottom:0; top:auto; z-index:30;
+    margin:0; gap:2px; overflow-x:visible;
+    background:var(--green-dark);
+    border-top:1px solid rgba(255,255,255,.15);
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -2px 10px rgba(0,0,0,.15);
+  }
+  nav button{
+    flex:1 1 0; flex-direction:column; align-items:center; justify-content:center;
+    gap:2px; white-space:normal; line-height:1.1; text-align:center;
+    padding:7px 2px; border-radius:10px; font-size:.62rem;
+    min-height:52px;
+  }
+  .nav-ic{font-size:1.15rem;}
+  .badge-count{top:2px;right:2px;}
+  .quick-add-btn{display:none;}
+  .card{padding:14px;}
+  .grid{gap:12px;}
+  .listing{padding:10px;}
+  th,td{padding:9px 6px;font-size:.8rem;}
+  .crop-stats{grid-template-columns:repeat(3,1fr);}
+}
+@media (min-width: 681px){
+  nav button{padding:9px 16px;}
+}
+</style>
+</head>
+<body>
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-brand">
+      <div style="font-size:2.6rem;">🌾</div>
+      <div style="font-weight:800;font-size:1.3rem;color:var(--green-dark);">FASLYNK</div>
+      <div style="font-size:.75rem;color:var(--muted);">FROM FARM TO FAIR PRICE</div>
+    </div>
+    <div id="login-lang-row">
+      <select id="login-lang-select" onchange="setLang(this.value)">
+        <option value="en">English</option>
+        <option value="hi" selected>हिंदी</option>
+        <option value="pa">ਪੰਜਾਬੀ</option>
+        <option value="mr">मराठी</option>
+        <option value="gu">ગુજરાતી</option>
+        <option value="bn">বাংলা</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+        <option value="kn">ಕನ್ನಡ</option>
+        <option value="ml">മലയാളം</option>
+        <option value="or">ଓଡ଼ିଆ</option>
+        <option value="as">অসমীয়া</option>
+        <option value="ur">اردو</option>
+      </select>
+    </div>
+    <div class="login-tabs">
+      <button id="login-tab-farmer" class="active" onclick="showLoginTab('farmer')">🌾 <span data-i18n="login_tab_farmer">किसान लॉगिन</span></button>
+      <button id="login-tab-buyer" onclick="showLoginTab('buyer')">🏢 <span data-i18n="login_tab_buyer">खरीदार लॉगिन</span></button>
+    </div>
+    <div class="card" id="login-farmer-form">
+      <label data-i18n="login_farmer_user_lbl">मोबाइल नंबर / यूज़रनेम</label>
+      <input id="login-farmer-user" type="text" placeholder="farmer" value="farmer">
+      <label data-i18n="login_pass_lbl">पासवर्ड</label>
+      <input id="login-farmer-pass" type="password" placeholder="1234" value="1234">
+      <button class="btn" onclick="doLogin('farmer')" data-i18n="login_btn">लॉगिन करें</button>
+      <div class="result" id="login-farmer-error"></div>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:10px;text-align:center;"><span data-i18n="login_demo_lbl">डेमो हेतु उपयोग करें:</span> <b>farmer</b> / <b>1234</b></p>
+    </div>
+    <div class="card" id="login-buyer-form" style="display:none;">
+      <label data-i18n="login_buyer_user_lbl">कंपनी यूज़रनेम</label>
+      <input id="login-buyer-user" type="text" placeholder="buyer" value="buyer">
+      <label data-i18n="login_pass_lbl">पासवर्ड</label>
+      <input id="login-buyer-pass" type="password" placeholder="1234" value="1234">
+      <button class="btn" onclick="doLogin('buyer')" data-i18n="login_btn">लॉगिन करें</button>
+      <div class="result" id="login-buyer-error"></div>
+      <p style="font-size:.75rem;color:var(--muted);margin-top:10px;text-align:center;"><span data-i18n="login_demo_lbl">डेमो हेतु उपयोग करें:</span> <b>buyer</b> / <b>1234</b></p>
+    </div>
+  </div>
+</div>
+<header>
+  <div class="top-row">
+    <div class="brand" onclick="activateTab('home')" title="Home">
+      <span style="font-size:1.5rem;">🌾</span>
+      <div style="line-height:1.15;">
+        <div>FASLYNK</div>
+        <div class="brand-sub">FROM FARM TO FAIR PRICE</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="role-toggle">
+        <button id="role-farmer" class="active" onclick="switchRole('farmer')">🌾 <span data-i18n="role_farmer">किसान</span></button>
+        <button id="role-buyer" onclick="switchRole('buyer')">🏢 <span data-i18n="role_buyer">खरीदार</span></button>
+      </div>
+      <select id="lang-select" onchange="setLang(this.value)">
+        <option value="en">English</option>
+        <option value="hi" selected>हिंदी</option>
+        <option value="pa">ਪੰਜਾਬੀ</option>
+        <option value="mr">मराठी</option>
+        <option value="gu">ગુજરાતી</option>
+        <option value="bn">বাংলা</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+        <option value="kn">ಕನ್ನಡ</option>
+        <option value="ml">മലയാളം</option>
+        <option value="or">ଓଡ଼ିଆ</option>
+        <option value="as">অসমীয়া</option>
+        <option value="ur">اردو</option>
+      </select>
+      <button class="quick-add-btn" onclick="openAddModal()">+ <span data-i18n="quick_add_label">फसल बेचें</span></button>
+      <button class="logout-btn" onclick="logout()" title="Logout">🚪</button>
+    </div>
+  </div>
+  <div class="tagline" data-i18n="tagline">सही खरीदार, सही कीमत, सही विकल्प</div>
+  <button class="about-link" onclick="activateTab('home')" data-i18n="about_link">ⓘ FASLYNK के बारे में</button>
+  <nav>
+    <button class="active" data-t="farmer"><span class="nav-ic">🌾</span><span data-i18n="nav_sell">फसल बेचें</span></button>
+    <button data-t="offers"><span class="nav-ic">🤝</span><span data-i18n="nav_offers">खरीदार ऑफर</span><span id="offers-badge" class="badge-count"></span></button>
+    <button data-t="buyer"><span class="nav-ic">🏢</span><span data-i18n="nav_buyer">खरीदार बाज़ार</span></button>
+    <button data-t="prices"><span class="nav-ic">📊</span><span data-i18n="nav_prices">मंडी भाव</span></button>
+    <button data-t="account"><span class="nav-ic">💵</span><span data-i18n="nav_earn">मेरी कमाई व स्थिति</span></button>
+  </nav>
+</header>
+
+<main>
+  <section class="section" id="home">
+    <div class="hero">
+      <div class="hero-icon">🌾</div>
+      <h1 data-i18n="hero_h1">किसानों को सीधे सही खरीदारों से जोड़ना</h1>
+      <p data-i18n="hero_p">आपकी फसल का सही दाम, सीधे खरीदार से — कोई बिचौलिया नहीं।</p>
+      <div class="hero-ctas">
+        <button class="btn" style="width:auto;" onclick="activateTab('farmer')" data-i18n="hero_cta_farmer">🌾 फसल बेचें शुरू करें</button>
+        <button class="btn btn-outline" style="width:auto;" onclick="activateTab('buyer')" data-i18n="hero_cta_buyer">🏢 खरीदार के रूप में देखें</button>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card"><h3 data-i18n="card1_h">🚜 किसानों के लिए</h3><p data-i18n="card1_p">अपनी उपज सूचीबद्ध करें, AI-सुझावित उचित मूल्य पाएं, और सत्यापित खरीदारों से जुड़ें — कोई बिचौलिया कटौती नहीं।</p></div>
+      <div class="card"><h3 data-i18n="card2_h">🏢 खरीदारों के लिए</h3><p data-i18n="card2_p">फसल, मात्रा और स्थान के अनुसार ग्रेडेड उपज सूचियां देखें, थोक सोर्सिंग आसान बनाएं।</p></div>
+      <div class="card"><h3 data-i18n="card3_h">📊 मूल्य जानकारी</h3><p data-i18n="card3_p">e-NAM और Agmarknet जैसे स्रोतों से लाइव मंडी मूल्य संदर्भ, एक ही स्थान पर।</p></div>
+      <div class="card"><h3 data-i18n="card4_h">🏷️ ग्रेडिंग सिस्टम</h3><p data-i18n="card4_p">सरल स्व-मूल्यांकित गुणवत्ता ग्रेडिंग (A/B/C) खरीदार का भरोसा बढ़ाती है।</p></div>
+      <div class="card"><h3 data-i18n="card5_h">📦 उपज प्रबंधन</h3><p data-i18n="card5_p">कटाई की गई मात्रा, ग्रेड और शेल्फ-लाइफ को ट्रैक करें ताकि नुकसान कम हो।</p></div>
+      <div class="card"><h3 data-i18n="card6_h">🏦 सीधा बैंक भुगतान</h3><p data-i18n="card6_p">बैंक या UPI विवरण एक बार सहेजें — सीधे अपने खाते में भुगतान पाएं, कोई नकद संभालना नहीं।</p></div>
+      <div class="card"><h3 data-i18n="card7_h">🚚 परिवहन सहायता</h3><p data-i18n="card7_p">अपना गांव और मात्रा बताएं — हम सही वाहन और अनुमानित परिवहन लागत सुझाएंगे।</p></div>
+    </div>
+  </section>
+
+  <section class="section active" id="farmer">
+    <div class="greet-card">
+      <h2 id="greet-heading">राम राम रमेश भाई! अपनी फसल का सही दाम पाएं</h2>
+      <p data-i18n="greet_sub">सीधे कंपनियों को बेचें। खेत से मुफ्त उठान और तुलाई होते ही सीधा बैंक में पैसा।</p>
+      <div class="greet-checks">
+        <span data-i18n="greet_b1">✓ खेत से मुफ्त उठान</span>
+        <span data-i18n="greet_b2">✓ 15-20% अधिक मुनाफा</span>
+        <span data-i18n="greet_b3">✓ सीधा बैंक खाते में पैसा</span>
+      </div>
+      <button class="btn" style="width:auto;" onclick="openAddModal()" data-i18n="greet_cta">+ नई फसल बेचें (यहाँ क्लिक करें)</button>
+    </div>
+
+    <div class="cat-row">
+      <span class="muted" data-i18n="cat_label">श्रेणी चुनें:</span>
+      <span class="muted" id="crop-count">4 फसलें</span>
+    </div>
+    <div class="cat-pills">
+      <button class="cat-pill active" data-cat="all" onclick="selectCategory('all')" data-i18n="cat_all">⭐ सभी फसलें</button>
+      <button class="cat-pill" data-cat="grain" onclick="selectCategory('grain')" data-i18n="cat_grain">🌾 अनाज (गेहूं, धान)</button>
+      <button class="cat-pill" data-cat="oilseed" onclick="selectCategory('oilseed')" data-i18n="cat_oilseed">🟡 तिलहन (सरसों, सोयाबीन)</button>
+      <button class="cat-pill" data-cat="pulse" onclick="selectCategory('pulse')" data-i18n="cat_pulse">🟤 दालें (चना, अरहर)</button>
+      <button class="cat-pill" data-cat="vegetable" onclick="selectCategory('vegetable')" data-i18n="cat_veg">🧅 सब्जियां (प्याज, आलू)</button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="crop-search" data-i18n-placeholder="ph_search" placeholder="फसल या जिले का नाम लिखें..." oninput="onSearchInput(this.value)">
+    </div>
+
+    <div id="crop-list"></div>
+  </section>
+
+  <section class="section" id="offers">
+    <div class="card">
+      <h3 data-i18n="offers_tab_title">आपकी फसलों पर खरीदार ऑफर</h3>
+      <p class="muted" style="font-size:.85rem;" data-i18n="offers_tab_sub">हर ऑफर को स्वीकार या अस्वीकार करें। स्वीकार करते ही यह आपके ऑर्डर में जुड़ जाएगा।</p>
+      <div id="offers-list"></div>
+    </div>
+  </section>
+
+  <section class="section" id="buyer">
+    <div class="greet-card">
+      <h2 id="buyer-greet-heading">नमस्ते AgroFresh Traders! सीधे किसानों से खरीदें</h2>
+      <p data-i18n="buyer_greet_sub">सत्यापित व ग्रेडेड उपज ब्राउज़ करें, सीधे किसान को ऑफर भेजें — कोई बिचौलिया नहीं।</p>
+      <div class="greet-checks">
+        <span data-i18n="buyer_b1">✓ सत्यापित व ग्रेडेड उपज</span>
+        <span data-i18n="buyer_b2">✓ सीधा किसान से संपर्क</span>
+        <span data-i18n="buyer_b3">✓ पारदर्शी मंडी भाव संदर्भ</span>
+      </div>
+    </div>
+
+    <div class="stat-cards">
+      <div class="stat-card"><div class="num" id="buyer-sent">0</div><div class="lbl" data-i18n="buyer_stat_sent">भेजे गए ऑफर</div></div>
+      <div class="stat-card"><div class="num" id="buyer-accepted">0</div><div class="lbl" data-i18n="buyer_stat_accepted">स्वीकृत सौदे</div></div>
+      <div class="stat-card"><div class="num" id="buyer-spend">₹0</div><div class="lbl" data-i18n="buyer_stat_spend">कुल खरीद मूल्य</div></div>
+    </div>
+
+    <div class="cat-row">
+      <span class="muted" data-i18n="cat_label">श्रेणी चुनें:</span>
+      <span class="muted" id="buyer-crop-count">4 फसलें</span>
+    </div>
+    <div class="cat-pills">
+      <button class="cat-pill active" data-cat="all" onclick="selectBuyerCategory('all')" data-i18n="cat_all">⭐ सभी फसलें</button>
+      <button class="cat-pill" data-cat="grain" onclick="selectBuyerCategory('grain')" data-i18n="cat_grain">🌾 अनाज (गेहूं, धान)</button>
+      <button class="cat-pill" data-cat="oilseed" onclick="selectBuyerCategory('oilseed')" data-i18n="cat_oilseed">🟡 तिलहन (सरसों, सोयाबीन)</button>
+      <button class="cat-pill" data-cat="pulse" onclick="selectBuyerCategory('pulse')" data-i18n="cat_pulse">🟤 दालें (चना, अरहर)</button>
+      <button class="cat-pill" data-cat="vegetable" onclick="selectBuyerCategory('vegetable')" data-i18n="cat_veg">🧅 सब्जियां (प्याज, आलू)</button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="buyer-search" data-i18n-placeholder="ph_search" placeholder="फसल या जिले का नाम लिखें..." oninput="onBuyerSearchInput(this.value)">
+    </div>
+
+    <div id="buyer-crop-list"></div>
+
+    <div class="card" style="margin-top:20px;">
+      <h3>📤 <span data-i18n="buyer_sent_title">मेरे भेजे गए ऑफर</span></h3>
+      <div id="buyer-sent-offers"></div>
+    </div>
+  </section>
+
+
+  <section class="section" id="prices">
+    <div class="card">
+      <h3 data-i18n="p_title">आज का मंडी मूल्य संदर्भ</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th data-i18n="th_crop">फसल</th><th data-i18n="th_price">औसत ₹/क्विंटल</th><th data-i18n="th_trend">रुझान</th></tr></thead>
+        <tbody id="price-table"></tbody>
+      </table></div>
+    </div>
+    <div class="card" style="margin-top:14px;">
+      <h3 data-i18n="p_compare">सापेक्ष मूल्य तुलना</h3>
+      <div id="price-bars"></div>
+    </div>
+  </section>
+
+  <section class="section" id="account">
+    <div class="stat-cards">
+      <div class="stat-card"><div class="num" id="earn-total">₹0</div><div class="lbl" data-i18n="earn_total">कुल सौदा मूल्य</div></div>
+      <div class="stat-card"><div class="num" id="earn-pending">₹0</div><div class="lbl" data-i18n="earn_pending">लंबित भुगतान</div></div>
+      <div class="stat-card"><div class="num" id="earn-qty">0 Qtl</div><div class="lbl" data-i18n="earn_qty">कुल बिकी मात्रा</div></div>
+    </div>
+    <div class="card">
+      <h3>🏦 <span data-i18n="bank_h">आपका बैंक विवरण</span></h3>
+      <p style="margin-bottom:6px;" data-i18n="bank_sub">एक बार सहेजें — भुगतान सीधे इसी खाते में भेजा जाएगा, नकद की ज़रूरत नहीं।</p>
+      <label data-i18n="bank_name_lbl">खाताधारक का नाम</label>
+      <input id="bank-name" type="text" data-i18n-placeholder="ph_bank_name" placeholder="जैसे Harpreet Singh">
+      <label data-i18n="bank_bankname_lbl">बैंक का नाम</label>
+      <input id="bank-bankname" type="text" data-i18n-placeholder="ph_bank_bankname" placeholder="जैसे State Bank of India">
+      <label data-i18n="bank_acc_lbl">खाता संख्या</label>
+      <input id="bank-acc" type="text" inputmode="numeric" data-i18n-placeholder="ph_bank_acc" placeholder="जैसे 000123456789">
+      <label data-i18n="bank_ifsc_lbl">IFSC कोड</label>
+      <input id="bank-ifsc" type="text" data-i18n-placeholder="ph_bank_ifsc" placeholder="जैसे SBIN0001234">
+      <label data-i18n="bank_upi_lbl">UPI ID (वैकल्पिक)</label>
+      <input id="bank-upi" type="text" data-i18n-placeholder="ph_bank_upi" placeholder="जैसे name@upi">
+      <button class="btn" onclick="saveBankDetails()" data-i18n="bank_save_btn">बैंक विवरण सहेजें</button>
+      <div class="result" id="bank-result"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h3>🚚 <span data-i18n="transport_h">परिवहन व उठान</span></h3>
+      <p style="margin-bottom:6px;" data-i18n="transport_sub">हम आपकी मात्रा के अनुसार सही वाहन व अनुमानित लागत सुझाएंगे।</p>
+      <label data-i18n="transport_need_lbl">क्या आपको उठान के लिए परिवहन चाहिए?</label>
+      <select id="transport-need">
+        <option value="yes" data-i18n="transport_need_yes">हां, मेरे लिए परिवहन की व्यवस्था करें</option>
+        <option value="no" data-i18n="transport_need_no">नहीं, मैं स्वयं पहुंचाऊंगा</option>
+      </select>
+      <label data-i18n="transport_loc_lbl">उठान गांव / पता</label>
+      <input id="transport-loc" type="text" data-i18n-placeholder="ph_transport_loc" placeholder="जैसे गांव रामपुर, पटियाला">
+      <label data-i18n="transport_date_lbl">पसंदीदा उठान तिथि</label>
+      <input id="transport-date" type="date">
+      <button class="btn" onclick="saveTransportDetails()" data-i18n="transport_save_btn">सहेजें व वाहन सुझाव पाएं</button>
+      <div class="result" id="transport-result"></div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <h3>📋 <span data-i18n="orders_h">मेरे ऑर्डर व भुगतान स्थिति</span></h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th data-i18n="th_order">ऑर्डर</th><th data-i18n="th_crop">फसल</th><th data-i18n="th_buyer">खरीदार</th><th data-i18n="th_amount">राशि</th><th data-i18n="th_payment">भुगतान</th><th data-i18n="th_transport">परिवहन</th></tr></thead>
+        <tbody id="orders-table"></tbody>
+      </table></div>
+    </div>
+  </section>
+</main>
+<footer data-i18n="footer">FASLYNK प्रोटोटाइप — इंटरफ़ेस डेमो, कीमतें उदाहरण मात्र हैं</footer>
+
+<div class="modal-overlay" id="add-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAddModal()">✕</button>
+    <h3 data-i18n="modal_title" style="margin-top:0;">नई फसल जोड़ें</h3>
+    <label data-i18n="f_crop_lbl">फसल</label>
+    <select id="f-crop">
+      <option value="Wheat" data-i18n="crop_wheat">गेहूं</option>
+      <option value="Rice" data-i18n="crop_rice">चावल</option>
+      <option value="Mustard" data-i18n="crop_mustard">सरसों</option>
+      <option value="Soybean" data-i18n="crop_soybean">सोयाबीन</option>
+      <option value="Chana" data-i18n="crop_chana">चना</option>
+      <option value="Arhar" data-i18n="crop_arhar">अरहर</option>
+      <option value="Tomato" data-i18n="crop_tomato">टमाटर</option>
+      <option value="Onion" data-i18n="crop_onion">प्याज़</option>
+      <option value="Potato" data-i18n="crop_potato">आलू</option>
+      <option value="Cotton" data-i18n="crop_cotton">कपास</option>
+    </select>
+    <label data-i18n="f_qty_lbl">मात्रा (क्विंटल)</label>
+    <input id="f-qty" type="number" min="1" value="10">
+    <label data-i18n="f_grade_lbl">गुणवत्ता ग्रेड (स्व-मूल्यांकित)</label>
+    <select id="f-grade">
+      <option value="A" data-i18n="grade_a">ग्रेड A — प्रीमियम, समान आकार, बिना नुकसान</option>
+      <option value="B" data-i18n="grade_b">ग्रेड B — अच्छा, मामूली दाग</option>
+      <option value="C" data-i18n="grade_c">ग्रेड C — औसत, मिश्रित गुणवत्ता</option>
+    </select>
+    <label data-i18n="f_loc_lbl">आपका ज़िला</label>
+    <input id="f-loc" type="text" data-i18n-placeholder="ph_f_loc" placeholder="जैसे Patiala, Punjab" value="Patiala, Punjab">
+
+    <label data-i18n="f_photo_lbl">फसल की फोटो जोड़ें (वैकल्पिक)</label>
+    <div class="photo-upload-row">
+      <img id="f-photo-preview" class="photo-preview" alt="crop photo preview">
+      <div>
+        <input id="f-photo" type="file" accept="image/*" onchange="previewCropPhoto(event)">
+        <div class="photo-hint" data-i18n="f_photo_hint">स्पष्ट फोटो से खरीदारों का भरोसा बढ़ता है।</div>
+      </div>
+    </div>
+
+    <div class="field-row2">
+      <div>
+        <label data-i18n="f_moisture_lbl">नमी (%)</label>
+        <input id="f-moisture" type="number" min="0" max="100" step="0.1" value="12">
+      </div>
+      <div>
+        <label data-i18n="f_harvest_lbl">कटाई की तारीख</label>
+        <input id="f-harvest" type="date">
+      </div>
+    </div>
+
+    <div class="field-row2">
+      <div>
+        <label data-i18n="f_packaging_lbl">पैकेजिंग प्रकार</label>
+        <select id="f-packaging">
+          <option value="loose" data-i18n="pack_loose">खुला (लूज़)</option>
+          <option value="jute" data-i18n="pack_jute">जूट बोरी</option>
+          <option value="pp_bag" data-i18n="pack_pp">PP/प्लास्टिक बोरी</option>
+          <option value="crate" data-i18n="pack_crate">क्रेट</option>
+        </select>
+      </div>
+      <div>
+        <label data-i18n="f_organic_lbl">जैविक (ऑर्गेनिक)?</label>
+        <select id="f-organic">
+          <option value="no" data-i18n="organic_no">नहीं</option>
+          <option value="yes" data-i18n="organic_yes">हाँ, प्रमाणित</option>
+          <option value="untested" data-i18n="organic_untested">जैविक पर अप्रमाणित</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn" onclick="suggestPrice()" data-i18n="f_btn">AI मूल्य सुझाव पाएं और खरीदार खोजें</button>
+    <div class="result" id="f-result"></div>
+    <button class="btn" style="background:var(--amber);color:#3a2900;" onclick="confirmAddListing()" data-i18n="modal_confirm">✓ इसे मेरी सूची में जोड़ें</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const translations = {
+  tagline: {en:'Right Buyer, Right Price, Right Choice', hi:'सही खरीदार, सही कीमत, सही विकल्प', pa:'ਸਹੀ ਖਰੀਦਦਾਰ, ਸਹੀ ਕੀਮਤ, ਸਹੀ ਚੋਣ', mr:'योग्य खरेदीदार, योग्य किंमत, योग्य निवड', gu:'યોગ્ય ખરીદનાર, યોગ્ય કિંમત, યોગ્ય પસંદગી', bn:'সঠিক ক্রেতা, সঠিক দাম, সঠিক পছন্দ', ta:'சரியான வாங்குபவர், சரியான விலை, சரியான தேர்வு', te:'సరైన కొనుగోలుదారు, సరైన ధర, సరైన ఎంపిక', kn:'ಸರಿಯಾದ ಖರೀದಿದಾರ, ಸರಿಯಾದ ಬೆಲೆ, ಸರಿಯಾದ ಆಯ್ಕೆ', ml:'ശരിയായ വാങ്ങുന്നയാൾ, ശരിയായ വില, ശരിയായ തിരഞ്ഞെടുപ്പ്', or:'ସଠିକ୍ କ୍ରେତା, ସଠିକ୍ ମୂଲ୍ୟ, ସଠିକ୍ ପସନ୍ଦ', as:'সঠিক ক্ৰেতা, সঠিক দাম, সঠিক পছন্দ', ur:'صحیح خریدار، صحیح قیمت، صحیح انتخاب'},
+  nav_home:{en:'Home', hi:'होम', pa:'ਹੋਮ', mr:'मुख्यपृष्ठ', gu:'હોમ', bn:'হোম', ta:'முகப்பு', te:'హోమ్', kn:'ಮುಖಪುಟ', ml:'ഹോം', or:'ହୋମ', as:'হোম', ur:'ہوم'},
+  nav_sell:{en:'Sell Crop', hi:'फसल बेचें'},
+  nav_offers:{en:'Buyer Offers', hi:'खरीदार ऑफर'},
+  nav_buyer:{en:'Buyer Marketplace', hi:'खरीदार बाज़ार', pa:'ਖਰੀਦਦਾਰ ਬਾਜ਼ਾਰ', mr:'खरेदीदार बाजार', gu:'ખરીદનાર બજાર', bn:'ক্রেতা বাজার', ta:'வாங்குபவர் சந்தை', te:'కొనుగోలుదారు మార్కెట్', kn:'ಖರೀದಿದಾರ ಮಾರುಕಟ್ಟೆ', ml:'വാങ്ങുന്നവരുടെ മാർക്കറ്റ്', or:'କ୍ରେତା ବଜାର', as:'ক্ৰেতা বজাৰ', ur:'خریدار مارکیٹ'},
+  nav_prices:{en:'Price Insights', hi:'मंडी भाव', pa:'ਕੀਮਤ ਜਾਣਕਾਰੀ', mr:'किंमत माहिती', gu:'ભાવ માહિતી', bn:'মূল্য তথ্য', ta:'விலை தகவல்', te:'ధర సమాచారం', kn:'ಬೆಲೆ ಮಾಹಿತಿ', ml:'വില വിവരം', or:'ମୂଲ୍ୟ ସୂଚନା', as:'দাম তথ্য', ur:'قیمت کی معلومات'},
+  nav_earn:{en:'My Earnings & Status', hi:'मेरी कमाई व स्थिति'},
+  role_farmer:{en:'Farmer', hi:'किसान'},
+  role_buyer:{en:'Buyer', hi:'खरीदार'},
+  quick_add_label:{en:'Sell Crop', hi:'फसल बेचें'},
+  about_link:{en:'ⓘ About FASLYNK', hi:'ⓘ FASLYNK के बारे में'},
+  hero_h1:{en:'Connecting Farmers Directly to the Right Buyers', hi:'किसानों को सीधे सही खरीदारों से जोड़ना', pa:'ਕਿਸਾਨਾਂ ਨੂੰ ਸਿੱਧੇ ਸਹੀ ਖਰੀਦਦਾਰਾਂ ਨਾਲ ਜੋੜਨਾ', mr:'शेतकऱ्यांना थेट योग्य खरेदीदारांशी जोडणे', gu:'ખેડૂતોને સીધા યોગ્ય ખરીદદારો સાથે જોડવું', bn:'কৃষকদের সরাসরি সঠিক ক্রেতার সাথে সংযুক্ত করা', ta:'விவசாயிகளை நேரடியாக சரியான வாங்குபவர்களுடன் இணைத்தல்', te:'రైతులను నేరుగా సరైన కొనుగోలుదారులతో అనుసంధానించడం', kn:'ರೈತರನ್ನು ನೇರವಾಗಿ ಸರಿಯಾದ ಖರೀದಿದಾರರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುವುದು', ml:'കർഷകരെ നേരിട്ട് ശരിയായ വാങ്ങുന്നവരുമായി ബന്ധിപ്പിക്കുന്നു', or:'କୃଷକମାନଙ୍କୁ ସିଧାସଳଖ ସଠିକ୍ କ୍ରେତାଙ୍କ ସହିତ ଯୋଡ଼ିବା', as:'কৃষকক পোনপটীয়াকৈ সঠিক ক্ৰেতাৰ সৈতে সংযোগ কৰা', ur:'کسانوں کو براہ راست صحیح خریداروں سے جوڑنا'},
+  hero_p:{en:'The right price for your crop, straight from the buyer — no middleman.', hi:'आपकी फसल का सही दाम, सीधे खरीदार से — कोई बिचौलिया नहीं।', pa:'ਤੁਹਾਡੀ ਫਸਲ ਦੀ ਸਹੀ ਕੀਮਤ, ਸਿੱਧੇ ਖਰੀਦਦਾਰ ਤੋਂ — ਕੋਈ ਵਿਚੋਲਾ ਨਹੀਂ।', mr:'तुमच्या पिकाची योग्य किंमत, थेट खरेदीदाराकडून — दलाल नाही.', gu:'તમારા પાકની યોગ્ય કિંમત, સીધી ખરીદનાર પાસેથી — કોઈ દલાલ નહીં.', bn:'আপনার ফসলের সঠিক দাম, সরাসরি ক্রেতার কাছ থেকে — কোনো মধ্যস্বত্বভোগী নেই।', ta:'உங்கள் பயிருக்கு சரியான விலை, நேரடியாக வாங்குபவரிடமிருந்து — இடைத்தரகர் இல்லை.', te:'మీ పంటకు సరైన ధర, నేరుగా కొనుగోలుదారు నుండి — మధ్యవర్తి లేరు.', kn:'ನಿಮ್ಮ ಬೆಳೆಗೆ ಸರಿಯಾದ ಬೆಲೆ, ನೇರವಾಗಿ ಖರೀದಿದಾರರಿಂದ — ಮಧ್ಯವರ್ತಿ ಇಲ್ಲ.', ml:'നിങ്ങളുടെ വിളയ്ക്ക് ശരിയായ വില, നേരിട്ട് വാങ്ങുന്നയാളിൽ നിന്ന് — ഇടനിലക്കാരില്ല.', or:'ଆପଣଙ୍କ ଫସଲର ସଠିକ୍ ମୂଲ୍ୟ, ସିଧାସଳଖ କ୍ରେତାଙ୍କଠାରୁ — କୌଣସି ମଧ୍ୟସ୍ଥି ନାହିଁ।', as:'আপোনাৰ শস্যৰ সঠিক দাম, পোনপটীয়াকৈ ক্ৰেতাৰ পৰা — কোনো মধ্যস্বত্বভোগী নাই।', ur:'آپ کی فصل کی صحیح قیمت، براہ راست خریدار سے — کوئی بیچولیا نہیں۔'},
+  hero_cta_farmer:{en:'🌾 Start Selling Crops', hi:'🌾 फसल बेचें शुरू करें'},
+  hero_cta_buyer:{en:'🏢 Browse as a Buyer', hi:'🏢 खरीदार के रूप में देखें'},
+  hero_pill:{en:'Enhancing the primary sector of India — Agriculture — by helping farmers manage &amp; process their produce', hi:'भारत के प्राथमिक क्षेत्र — कृषि — को मज़बूत बनाना, किसानों को उनकी उपज प्रबंधित और प्रोसेस करने में मदद करके', pa:'ਭਾਰਤ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸੈਕਟਰ — ਖੇਤੀਬਾੜੀ — ਨੂੰ ਮਜ਼ਬੂਤ ਕਰਨਾ, ਕਿਸਾਨਾਂ ਨੂੰ ਆਪਣੀ ਪੈਦਾਵਾਰ ਦਾ ਪ੍ਰਬੰਧ ਅਤੇ ਪ੍ਰੋਸੈਸਿੰਗ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਕੇ', mr:'भारताच्या प्राथमिक क्षेत्राला — शेतीला — बळकट करणे, शेतकऱ्यांना उत्पादन व्यवस्थापन व प्रक्रियेत मदत करून', gu:'ભારતના પ્રાથમિક ક્ષેત્ર — કૃષિ — ને મજબૂત બનાવવું, ખેડૂતોને તેમની ઉપજ સંભાળવા અને પ્રોસેસ કરવામાં મદદ કરીને', bn:'ভারতের প্রাথমিক খাত — কৃষি — কে শক্তিশালী করা, কৃষকদের ফসল পরিচালনা ও প্রক্রিয়াকরণে সাহায্য করে', ta:'இந்தியாவின் முதன்மைத் துறையான — வேளாண்மையை — வலுப்படுத்துதல், விவசாயிகள் தங்கள் விளைபொருளை நிர்வகிக்கவும் பதப்படுத்தவும் உதவி செய்தல்', te:'భారతదేశ ప్రాథమిక రంగం — వ్యవసాయాన్ని — బలోపేతం చేయడం, రైతులు తమ ఉత్పత్తులను నిర్వహించడం మరియు ప్రాసెస్ చేయడంలో సహాయపడటం', kn:'ಭಾರತದ ಪ್ರಾಥಮಿಕ ವಲಯವಾದ ಕೃಷಿಯನ್ನು ಬಲಪಡಿಸುವುದು, ರೈತರಿಗೆ ಅವರ ಉತ್ಪನ್ನ ನಿರ್ವಹಣೆ ಮತ್ತು ಸಂಸ್ಕರಣೆಗೆ ಸಹಾಯ ಮಾಡುವ ಮೂಲಕ', ml:'ഇന്ത്യയുടെ പ്രാഥമിക മേഖലയായ കൃഷിയെ ശക്തിപ്പെടുത്തുന്നു, കർഷകരെ അവരുടെ ഉൽപ്പന്നം കൈകാര്യം ചെയ്യാനും സംസ്കരിക്കാനും സഹായിച്ചുകൊണ്ട്', or:'ଭାରତର ପ୍ରାଥମିକ କ୍ଷେତ୍ର — କୃଷି — କୁ ମଜବୁତ କରିବା, କୃଷକମାନଙ୍କୁ ସେମାନଙ୍କ ଉତ୍ପାଦନ ପରିଚାଳନା ଓ ପ୍ରକ୍ରିୟାକରଣରେ ସାହାଯ୍ୟ କରି', as:'ভাৰতৰ প্ৰাথমিক খণ্ড — কৃষি — ক শক্তিশালী কৰা, কৃষকক তেওঁলোকৰ উৎপাদন পৰিচালনা আৰু প্ৰক্ৰিয়াকৰণত সহায় কৰি', ur:'ہندوستان کے بنیادی شعبے — زراعت — کو مضبوط بنانا، کسانوں کی پیداوار کے انتظام اور پروسیسنگ میں مدد کر کے'},
+  card1_h:{en:'🚜 For Farmers', hi:'🚜 किसानों के लिए', pa:'🚜 ਕਿਸਾਨਾਂ ਲਈ', mr:'🚜 शेतकऱ्यांसाठी', gu:'🚜 ખેડૂતો માટે', bn:'🚜 কৃষকদের জন্য', ta:'🚜 விவசாயிகளுக்கு', te:'🚜 రైతుల కోసం', kn:'🚜 ರೈತರಿಗಾಗಿ', ml:'🚜 കർഷകർക്കായി', or:'🚜 କୃଷକଙ୍କ ପାଇଁ', as:'🚜 কৃষকৰ বাবে', ur:'🚜 کسانوں کے لیے'},
+  card1_p:{en:'List your produce, get an AI-suggested fair price, and get matched with verified buyers near you — no middleman cut.', hi:'अपनी उपज सूचीबद्ध करें, AI-सुझावित उचित मूल्य पाएं, और अपने पास के सत्यापित खरीदारों से जुड़ें — कोई बिचौलिया कटौती नहीं।', pa:'ਆਪਣੀ ਪੈਦਾਵਾਰ ਸੂਚੀਬੱਧ ਕਰੋ, AI-ਸੁਝਾਈ ਸਹੀ ਕੀਮਤ ਪਾਓ, ਅਤੇ ਆਪਣੇ ਨੇੜੇ ਦੇ ਪ੍ਰਮਾਣਿਤ ਖਰੀਦਦਾਰਾਂ ਨਾਲ ਜੁੜੋ।', mr:'तुमचा माल नोंदवा, AI-सुचवलेली योग्य किंमत मिळवा, आणि जवळच्या सत्यापित खरेदीदारांशी जुळवा — दलालांची कपात नाही.', gu:'તમારી ઉપજ યાદી કરો, AI-સૂચિત વાજબી ભાવ મેળવો, અને નજીકના ચકાસાયેલા ખરીદદારો સાથે જોડાવો — કોઈ દલાલ કાપ નહીં.', bn:'আপনার ফসল তালিকাভুক্ত করুন, AI-প্রস্তাবিত ন্যায্য মূল্য পান, এবং কাছের যাচাইকৃত ক্রেতাদের সাথে মিলুন — কোনো মধ্যস্বত্বভোগী কাটছাঁট নেই।', ta:'உங்கள் விளைபொருளைப் பட்டியலிடுங்கள், AI-பரிந்துரைத்த நியாயமான விலையைப் பெறுங்கள், அருகிலுள்ள சரிபார்க்கப்பட்ட வாங்குபவர்களுடன் இணையுங்கள் — இடைத்தரகர் கழிவு இல்லை.', te:'మీ ఉత్పత్తిని జాబితా చేయండి, AI-సూచించిన సరైన ధరను పొందండి, సమీపంలోని ధృవీకరించబడిన కొనుగోలుదారులతో సరిపోల్చండి — మధ్యవర్తి కోత లేదు.', kn:'ನಿಮ್ಮ ಉತ್ಪನ್ನವನ್ನು ಪಟ್ಟಿ ಮಾಡಿ, AI-ಸೂಚಿಸಿದ ನ್ಯಾಯಯುತ ಬೆಲೆ ಪಡೆಯಿರಿ, ಹತ್ತಿರದ ಪರಿಶೀಲಿಸಿದ ಖರೀದಿದಾರರೊಂದಿಗೆ ಹೊಂದಿಸಿಕೊಳ್ಳಿ — ಮಧ್ಯವರ್ತಿ ಕಡಿತವಿಲ್ಲ.', ml:'നിങ്ങളുടെ ഉൽപ്പന്നം ലിസ്റ്റ് ചെയ്യുക, AI നിർദ്ദേശിക്കുന്ന ന്യായമായ വില നേടുക, സമീപത്തുള്ള സ്ഥിരീകരിച്ച വാങ്ങുന്നവരുമായി പൊരുത്തപ്പെടുക — ഇടനിലക്കാരുടെ കമ്മീഷൻ ഇല്ല.', or:'ଆପଣଙ୍କ ଉତ୍ପାଦନ ତାଲିକାଭୁକ୍ତ କରନ୍ତୁ, AI-ପରାମର୍ଶିତ ନ୍ୟାୟସଙ୍ଗତ ମୂଲ୍ୟ ପାଆନ୍ତୁ, ଏବଂ ନିକଟସ୍ଥ ଯାଞ୍ଚିତ କ୍ରେତାଙ୍କ ସହିତ ମେଳ କରନ୍ତୁ — କୌଣସି ମଧ୍ୟସ୍ଥି କଟା ନାହିଁ।', as:'আপোনাৰ উৎপাদন তালিকাভুক্ত কৰক, AI-পৰামৰ্শিত সঠিক দাম লাভ কৰক, আৰু ওচৰৰ প্ৰমাণিত ক্ৰেতাৰ সৈতে মিলি লওক — কোনো মধ্যস্বত্বভোগীৰ কাট নাই।', ur:'اپنی پیداوار درج کریں، AI کی تجویز کردہ مناسب قیمت حاصل کریں، اور قریبی تصدیق شدہ خریداروں سے جڑیں — کوئی بیچولیا کٹوتی نہیں۔'},
+  card2_h:{en:'🏢 For Buyers', hi:'🏢 खरीदारों के लिए', pa:'🏢 ਖਰੀਦਦਾਰਾਂ ਲਈ', mr:'🏢 खरेदीदारांसाठी', gu:'🏢 ખરીદદારો માટે', bn:'🏢 ক্রেতাদের জন্য', ta:'🏢 வாங்குபவர்களுக்கு', te:'🏢 కొనుగోలుదారుల కోసం', kn:'🏢 ಖರೀದಿದಾರರಿಗಾಗಿ', ml:'🏢 വാങ്ങുന്നവർക്ക്', or:'🏢 କ୍ରେତାଙ୍କ ପାଇଁ', as:'🏢 ক্ৰেতাৰ বাবে', ur:'🏢 خریداروں کے لیے'},
+  card2_p:{en:'Browse graded produce listings by crop, quantity and location for easier bulk sourcing.', hi:'फसल, मात्रा और स्थान के अनुसार ग्रेडेड उपज सूचियां देखें, थोक सोर्सिंग आसान बनाएं।', pa:'ਫਸਲ, ਮਾਤਰਾ ਅਤੇ ਸਥਾਨ ਅਨੁਸਾਰ ਗ੍ਰੇਡ ਕੀਤੀ ਪੈਦਾਵਾਰ ਸੂਚੀਆਂ ਵੇਖੋ।', mr:'सुलभ मोठ्या प्रमाणात खरेदीसाठी पीक, प्रमाण व स्थानानुसार श्रेणीबद्ध यादी पहा.', gu:'સરળ જથ્થાબંધ સોર્સિંગ માટે પાક, જથ્થો અને સ્થાન મુજબ ગ્રેડેડ યાદીઓ બ્રાઉઝ કરો.', bn:'সহজ পাইকারি সংগ্রহের জন্য ফসল, পরিমাণ ও অবস্থান অনুযায়ী গ্রেডেড তালিকা দেখুন।', ta:'எளிதான மொத்த கொள்முதலுக்காக பயிர், அளவு மற்றும் இடத்தின் அடிப்படையில் தர வகைப்படுத்தப்பட்ட பட்டியல்களை உலாவவும்.', te:'సులభమైన బల్క్ సోర్సింగ్ కోసం పంట, పరిమాణం మరియు ప్రదేశం ద్వారా గ్రేడ్ చేసిన జాబితాలను బ్రౌజ్ చేయండి.', kn:'ಸುಲಭ ಬೃಹತ್ ಖರೀದಿಗಾಗಿ ಬೆಳೆ, ಪ್ರಮಾಣ ಮತ್ತು ಸ್ಥಳದ ಪ್ರಕಾರ ಗ್ರೇಡ್ ಮಾಡಿದ ಪಟ್ಟಿಗಳನ್ನು ವೀಕ್ಷಿಸಿ.', ml:'എളുപ്പമുള്ള ബൾക്ക് സോഴ്‌സിംഗിനായി വിള, അളവ്, സ്ഥലം എന്നിവയനുസരിച്ച് ഗ്രേഡ് ചെയ്ത ലിസ്റ്റിംഗുകൾ ബ്രൗസ് ചെയ്യുക.', or:'ସହଜ ବଲ୍କ ସୋର୍ସିଂ ପାଇଁ ଫସଲ, ପରିମାଣ ଓ ସ୍ଥାନ ଅନୁସାରେ ଗ୍ରେଡ୍ ହୋଇଥିବା ତାଲିକା ଦେଖନ୍ତୁ।', as:'সহজ বাল্ক ছৰ্চিঙৰ বাবে শস্য, পৰিমাণ আৰু অৱস্থান অনুসৰি গ্ৰেড কৰা তালিকা চাওক।', ur:'آسان بلک سورسنگ کے لیے فصل، مقدار اور مقام کے مطابق گریڈ شدہ فہرستیں دیکھیں۔'},
+  card3_h:{en:'📊 Price Discovery', hi:'📊 मूल्य जानकारी', pa:'📊 ਕੀਮਤ ਜਾਣਕਾਰੀ', mr:'📊 किंमत माहिती', gu:'📊 ભાવ શોધ', bn:'📊 মূল্য অনুসন্ধান', ta:'📊 விலை கண்டறிதல்', te:'📊 ధర గుర్తింపు', kn:'📊 ಬೆಲೆ ಶೋಧನೆ', ml:'📊 വില കണ്ടെത്തൽ', or:'📊 ମୂଲ୍ୟ ଅନ୍ୱେଷଣ', as:'📊 দাম আৱিষ্কাৰ', ur:'📊 قیمت کی دریافت'},
+  card3_p:{en:'Live mandi price references pulled from sources like e‑NAM and Agmarknet, shown in one place.', hi:'e-NAM और Agmarknet जैसे स्रोतों से लाइव मंडी मूल्य संदर्भ, एक ही स्थान पर।', pa:'e-NAM ਅਤੇ Agmarknet ਵਰਗੇ ਸਰੋਤਾਂ ਤੋਂ ਲਾਈਵ ਮੰਡੀ ਕੀਮਤ ਹਵਾਲੇ, ਇੱਕੋ ਥਾਂ ਤੇ।', mr:'e-NAM व Agmarknet सारख्या स्रोतांमधून थेट बाजारभाव संदर्भ, एकाच ठिकाणी.', gu:'e-NAM અને Agmarknet જેવા સ્ત્રોતોમાંથી લાઇવ મંડી ભાવ સંદર્ભો, એક જ જગ્યાએ.', bn:'e-NAM এবং Agmarknet-এর মতো উৎস থেকে লাইভ মান্ডি মূল্য তথ্য, এক জায়গায়।', ta:'e-NAM மற்றும் Agmarknet போன்ற ஆதாரங்களிலிருந்து நேரடி மண்டி விலை தகவல்கள், ஒரே இடத்தில்.', te:'e-NAM మరియు Agmarknet వంటి మూలాల నుండి లైవ్ మండి ధర సమాచారం, ఒకే చోట.', kn:'e-NAM ಮತ್ತು Agmarknet ನಂತಹ ಮೂಲಗಳಿಂದ ನೇರ ಮಂಡಿ ಬೆಲೆ ಮಾಹಿತಿ, ಒಂದೇ ಸ್ಥಳದಲ್ಲಿ.', ml:'e-NAM, Agmarknet പോലുള്ള ഉറവിടങ്ങളിൽ നിന്നുള്ള തത്സമയ മണ്ടി വില വിവരങ്ങൾ, ഒരിടത്ത്.', or:'e-NAM ଏବଂ Agmarknet ପରି ଉତ୍ସରୁ ଲାଇଭ୍ ମଣ୍ଡି ମୂଲ୍ୟ ସୂଚନା, ଏକ ସ୍ଥାନରେ।', as:'e-NAM আৰু Agmarknet ৰ পৰা লাইভ মাণ্ডি দাম তথ্য, এটা ঠাইতে।', ur:'e-NAM اور Agmarknet جیسے ذرائع سے لائیو منڈی قیمت کی معلومات، ایک ہی جگہ۔'},
+  card4_h:{en:'🏷️ Grading System', hi:'🏷️ ग्रेडिंग सिस्टम', pa:'🏷️ ਗ੍ਰੇਡਿੰਗ ਸਿਸਟਮ', mr:'🏷️ ग्रेडिंग प्रणाली', gu:'🏷️ ગ્રેડિંગ સિસ્ટમ', bn:'🏷️ গ্রেডিং সিস্টেম', ta:'🏷️ தர வகைப்பாடு', te:'🏷️ గ్రేడింగ్ వ్యవస్థ', kn:'🏷️ ಗ್ರೇಡಿಂಗ್ ವ್ಯವಸ್ಥೆ', ml:'🏷️ ഗ്രേഡിംഗ് സംവിധാനം', or:'🏷️ ଗ୍ରେଡିଂ ସିଷ୍ଟମ', as:'🏷️ গ্ৰেডিং প্ৰণালী', ur:'🏷️ گریڈنگ سسٹم'},
+  card4_p:{en:'Simple self-assessed quality grading (A/B/C) increases buyer trust and speeds up matching.', hi:'सरल स्व-मूल्यांकित गुणवत्ता ग्रेडिंग (A/B/C) खरीदार का भरोसा बढ़ाती है और मिलान तेज़ करती है।', pa:'ਸਧਾਰਨ ਸਵੈ-ਮੁਲਾਂਕਿਤ ਗੁਣਵੱਤਾ ਗ੍ਰੇਡਿੰਗ (A/B/C) ਖਰੀਦਦਾਰ ਦਾ ਭਰੋਸਾ ਵਧਾਉਂਦੀ ਹੈ।', mr:'साधी स्व-मूल्यांकित गुणवत्ता श्रेणी (A/B/C) खरेदीदाराचा विश्वास वाढवते व जुळणी वेगवान करते.', gu:'સરળ સ્વ-મૂલ્યાંકિત ગુણવત્તા ગ્રેડિંગ (A/B/C) ખરીદદારનો વિશ્વાસ વધારે છે અને મેચિંગ ઝડપી બનાવે છે.', bn:'সহজ স্ব-মূল্যায়িত গুণমান গ্রেডিং (A/B/C) ক্রেতার আস্থা বাড়ায় ও মিলন দ্রুত করে।', ta:'எளிய சுய-மதிப்பீட்டு தர வகைப்பாடு (A/B/C) வாங்குபவர் நம்பிக்கையை அதிகரிக்கிறது.', te:'సాధారణ స్వీయ-మూల్యాంకన నాణ్యత గ్రేడింగ్ (A/B/C) కొనుగోలుదారు నమ్మకాన్ని పెంచుతుంది.', kn:'ಸರಳ ಸ್ವಯಂ-ಮೌಲ್ಯಮಾಪನ ಗುಣಮಟ್ಟ ಗ್ರೇಡಿಂಗ್ (A/B/C) ಖರೀದಿದಾರರ ವಿಶ್ವಾಸವನ್ನು ಹೆಚ್ಚಿಸುತ್ತದೆ.', ml:'ലളിതമായ സ്വയം വിലയിരുത്തിയ ഗുണനിലവാര ഗ്രേഡിംഗ് (A/B/C) വാങ്ങുന്നവരുടെ വിശ്വാസം വർദ്ധിപ്പിക്കുന്നു.', or:'ସରଳ ସ୍ୱ-ମୂଲ୍ୟାୟିତ ଗୁଣବତ୍ତା ଗ୍ରେଡିଂ (A/B/C) କ୍ରେତାଙ୍କ ବିଶ୍ୱାସ ବଢ଼ାଏ।', as:'সৰল স্ব-মূল্যায়িত গুণগত মান গ্ৰেডিং (A/B/C) এ ক্ৰেতাৰ বিশ্বাস বৃদ্ধি কৰে।', ur:'سادہ خود جانچی گئی معیار گریڈنگ (A/B/C) خریدار کے اعتماد کو بڑھاتی ہے۔'},
+  card5_h:{en:'📦 Produce Management', hi:'📦 उपज प्रबंधन', pa:'📦 ਪੈਦਾਵਾਰ ਪ੍ਰਬੰਧਨ', mr:'📦 उत्पादन व्यवस्थापन', gu:'📦 ઉપજ વ્યવસ્થાપન', bn:'📦 ফসল ব্যবস্থাপনা', ta:'📦 விளைபொருள் மேலாண்மை', te:'📦 ఉత్పత్తి నిర్వహణ', kn:'📦 ಉತ್ಪನ್ನ ನಿರ್ವಹಣೆ', ml:'📦 ഉൽപ്പന്ന മാനേജ്മെന്റ്', or:'📦 ଉତ୍ପାଦନ ପରିଚାଳନା', as:'📦 উৎপাদন ব্যৱস্থাপনা', ur:'📦 پیداوار کا انتظام'},
+  card5_p:{en:'Track harvested quantity, grade and shelf-life so farmers can decide what to sell now vs. store, cutting post-harvest loss.', hi:'कटाई की गई मात्रा, ग्रेड और शेल्फ-लाइफ को ट्रैक करें ताकि किसान तय कर सकें कि अभी क्या बेचना है और क्या स्टोर करना है, जिससे फसल के बाद होने वाला नुकसान कम हो।', pa:'ਵਾਢੀ ਕੀਤੀ ਮਾਤਰਾ, ਗ੍ਰੇਡ ਅਤੇ ਸ਼ੈਲਫ-ਲਾਈਫ ਟਰੈਕ ਕਰੋ ਤਾਂ ਜੋ ਕਿਸਾਨ ਫੈਸਲਾ ਕਰ ਸਕਣ ਕਿ ਹੁਣੇ ਕੀ ਵੇਚਣਾ ਹੈ।', mr:'काढणी केलेले प्रमाण, दर्जा व टिकाऊपणा ट्रॅक करा जेणेकरून शेतकरी आत्ता विकायचे की साठवायचे ठरवू शकतील, काढणीनंतरचे नुकसान कमी होईल.', gu:'લણેલો જથ્થો, ગ્રેડ અને શેલ્ફ-લાઇફ ટ્રેક કરો જેથી ખેડૂત નક્કી કરી શકે અત્યારે વેચવું કે સંગ્રહ કરવો, લણણી પછીનું નુકસાન ઘટે.', bn:'ফসল কাটার পরিমাণ, গ্রেড ও স্থায়িত্ব ট্র্যাক করুন যাতে কৃষক এখনই বিক্রি করবে না মজুত করবে তা ঠিক করতে পারে।', ta:'அறுவடை செய்த அளவு, தரம் மற்றும் நீடித்திருக்கும் காலத்தை கண்காணிக்கவும், விவசாயி இப்போது விற்பதா சேமிப்பதா என முடிவெடுக்க உதவும்.', te:'పంట పరిమాణం, గ్రేడ్ మరియు నిల్వ కాలాన్ని ట్రాక్ చేయండి, తద్వారా రైతు ఇప్పుడు అమ్మాలా నిల్వ చేయాలా అని నిర్ణయించుకోగలరు.', kn:'ಕೊಯ್ಲು ಮಾಡಿದ ಪ್ರಮಾಣ, ಗ್ರೇಡ್ ಮತ್ತು ಶೆಲ್ಫ್-ಲೈಫ್ ಟ್ರ್ಯಾಕ್ ಮಾಡಿ, ರೈತ ಈಗಲೇ ಮಾರಬೇಕೆ ಅಥವಾ ಸಂಗ್ರಹಿಸಬೇಕೆ ಎಂದು ನಿರ್ಧರಿಸಬಹುದು.', ml:'വിളവെടുത്ത അളവ്, ഗ്രേഡ്, ഷെൽഫ്-ലൈഫ് ട്രാക്ക് ചെയ്യുക, കർഷകന് ഇപ്പോൾ വിൽക്കണോ സൂക്ഷിക്കണോ എന്ന് തീരുമാനിക്കാം.', or:'ଅମଳ ପରିମାଣ, ଗ୍ରେଡ୍ ଓ ସେଲ୍ଫ-ଲାଇଫ୍ ଟ୍ରାକ୍ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା କୃଷକ ବର୍ତ୍ତମାନ ବିକ୍ରି କି ଭଣ୍ଡାର କରିବେ ତାହା ସ୍ଥିର କରିପାରିବେ।', as:'শস্য চপোৱা পৰিমাণ, গ্ৰেড আৰু চেল্ফ-লাইফ ট্ৰেক কৰক যাতে কৃষকে সিদ্ধান্ত লʼব পাৰে।', ur:'کٹائی کی مقدار، گریڈ اور شیلف لائف کو ٹریک کریں تاکہ کسان فیصلہ کر سکے کہ ابھی بیچنا ہے یا ذخیرہ کرنا ہے۔'},
+  card6_h:{en:'🏦 Direct Bank Payments', hi:'🏦 सीधा बैंक भुगतान'},
+  card6_p:{en:'Save your bank or UPI details once — get paid straight to your account, no cash handling and no delay.', hi:'बैंक या UPI विवरण एक बार सहेजें — सीधे अपने खाते में भुगतान पाएं, कोई नकद संभालना नहीं।'},
+  card7_h:{en:'🚚 Transport Assistance', hi:'🚚 परिवहन सहायता'},
+  card7_p:{en:'Tell us your pickup village and quantity — we suggest the right vehicle and an estimated transport cost to reach the buyer.', hi:'अपना गांव और मात्रा बताएं — हम सही वाहन और अनुमानित परिवहन लागत सुझाएंगे।'},
+  greet_sub:{en:'Sell directly to companies. Get paid to your bank the moment your produce is picked up and weighed.', hi:'सीधे कंपनियों को बेचें। खेत से मुफ्त उठान और तुलाई होते ही सीधा बैंक में पैसा।'},
+  greet_b1:{en:'✓ Free pickup from farm', hi:'✓ खेत से मुफ्त उठान'},
+  greet_b2:{en:'✓ 15-20% more profit', hi:'✓ 15-20% अधिक मुनाफा'},
+  greet_b3:{en:'✓ Payment straight to bank account', hi:'✓ सीधा बैंक खाते में पैसा'},
+  greet_cta:{en:'+ Sell New Crop (Click Here)', hi:'+ नई फसल बेचें (यहाँ क्लिक करें)'},
+  cat_label:{en:'Choose Category:', hi:'श्रेणी चुनें:', pa:'ਸ਼੍ਰੇਣੀ ਚੁਣੋ:', mr:'श्रेणी निवडा:', gu:'શ્રેણી પસંદ કરો:', bn:'ক্যাটাগরি বেছে নিন:', ta:'வகையைத் தேர்ந்தெடுக்கவும்:', te:'వర్గాన్ని ఎంచుకోండి:', kn:'ವರ್ಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ:', ml:'വിഭാഗം തിരഞ്ഞെടുക്കുക:', or:'ବର୍ଗ ବାଛନ୍ତୁ:', as:'শ্ৰেণী বাছক:', ur:'زمرہ منتخب کریں:'},
+  label_crops:{en:'crops', hi:'फसलें', pa:'ਫਸਲਾਂ', mr:'पिके', gu:'પાક', bn:'ফসল', ta:'பயிர்கள்', te:'పంటలు', kn:'ಬೆಳೆಗಳು', ml:'വിളകൾ', or:'ଫସଲ', as:'শস্য', ur:'فصلیں'},
+  cat_all:{en:'⭐ All Crops', hi:'⭐ सभी फसलें', pa:'⭐ ਸਾਰੀਆਂ ਫਸਲਾਂ', mr:'⭐ सर्व पिके', gu:'⭐ બધા પાક', bn:'⭐ সব ফসল', ta:'⭐ அனைத்து பயிர்கள்', te:'⭐ అన్ని పంటలు', kn:'⭐ ಎಲ್ಲಾ ಬೆಳೆಗಳು', ml:'⭐ എല്ലാ വിളകളും', or:'⭐ ସମସ୍ତ ଫସଲ', as:'⭐ সকলো শস্য', ur:'⭐ تمام فصلیں'},
+  cat_grain:{en:'🌾 Grains (Wheat, Rice)', hi:'🌾 अनाज (गेहूं, धान)', pa:'🌾 ਅਨਾਜ (ਕਣਕ, ਝੋਨਾ)', mr:'🌾 धान्य (गहू, भात)', gu:'🌾 અનાજ (ઘઉં, ડાંગર)', bn:'🌾 শস্য (গম, ধান)', ta:'🌾 தானியங்கள் (கோதுமை, நெல்)', te:'🌾 ధాన్యాలు (గోధుమ, వరి)', kn:'🌾 ಧಾನ್ಯಗಳು (ಗೋಧಿ, ಭತ್ತ)', ml:'🌾 ധാന്യങ്ങൾ (ഗോതമ്പ്, നെല്ല്)', or:'🌾 ଶସ୍ୟ (ଗହମ, ଧାନ)', as:'🌾 শস্য (ঘেঁহু, ধান)', ur:'🌾 اناج (گیہوں، دھان)'},
+  cat_oilseed:{en:'🟡 Oilseeds (Mustard, Soybean)', hi:'🟡 तिलहन (सरसों, सोयाबीन)', pa:'🟡 ਤੇਲ ਬੀਜ (ਸਰ੍ਹੋਂ, ਸੋਇਆਬੀਨ)', mr:'🟡 तेलबिया (मोहरी, सोयाबीन)', gu:'🟡 તેલીબિયાં (રાઈ, સોયાબીન)', bn:'🟡 তৈলবীজ (সরিষা, সয়াবিন)', ta:'🟡 எண்ணெய் வித்துக்கள் (கடுகு, சோயாபீன்)', te:'🟡 నూనె గింజలు (ఆవాలు, సోయాబీన్)', kn:'🟡 ಎಣ್ಣೆಬೀಜಗಳು (ಸಾಸಿವೆ, ಸೋಯಾಬೀನ್)', ml:'🟡 എണ്ണക്കുരുക്കൾ (കടുക്, സോയാബീൻ)', or:'🟡 ତୈଳବୀଜ (ସୋରିଷ, ସୋୟାବିନ)', as:'🟡 তৈলবীজ (সৰিয়হ, ছয়াবিন)', ur:'🟡 تیل کے بیج (سرسوں، سویابین)'},
+  cat_pulse:{en:'🟤 Pulses (Chana, Arhar)', hi:'🟤 दालें (चना, अरहर)', pa:'🟤 ਦਾਲਾਂ (ਛੋਲੇ, ਅਰਹਰ)', mr:'🟤 कडधान्ये (हरभरा, तूर)', gu:'🟤 કઠોળ (ચણા, તુવેર)', bn:'🟤 ডাল (ছোলা, অড়হর)', ta:'🟤 பருப்பு வகைகள் (கொண்டைக்கடலை, துவரம் பருப்பு)', te:'🟤 పప్పు ధాన్యాలు (శనగలు, కంది)', kn:'🟤 ಬೇಳೆಕಾಳುಗಳು (ಕಡಲೆ, ತೊಗರಿ)', ml:'🟤 പയർവർഗ്ഗങ്ങൾ (കടല, തുവര)', or:'🟤 ଡାଲି (ଛୋଲା, ଅରହର)', as:'🟤 মাহ (ছোলা, অৰহৰ)', ur:'🟤 دالیں (چنا، ارہر)'},
+  cat_veg:{en:'🧅 Vegetables (Onion, Potato)', hi:'🧅 सब्जियां (प्याज, आलू)', pa:'🧅 ਸਬਜ਼ੀਆਂ (ਪਿਆਜ਼, ਆਲੂ)', mr:'🧅 भाज्या (कांदा, बटाटा)', gu:'🧅 શાકભાજી (ડુંગળી, બટાકા)', bn:'🧅 সবজি (পেঁয়াজ, আলু)', ta:'🧅 காய்கறிகள் (வெங்காயம், உருளைக்கிழங்கு)', te:'🧅 కూరగాయలు (ఉల్లిపాయ, బంగాళదుంప)', kn:'🧅 ತರಕಾರಿಗಳು (ಈರುಳ್ಳಿ, ಆಲೂಗಡ್ಡೆ)', ml:'🧅 പച്ചക്കറികൾ (ഉള്ളി, ഉരുളക്കിഴങ്ങ്)', or:'🧅 ପନିପରିବା (ପିଆଜ, ଆଳୁ)', as:'🧅 শাক-পাচলি (পিঁয়াজ, আলু)', ur:'🧅 سبزیاں (پیاز، آلو)'},
+  label_qty:{en:'Total Qty', hi:'कुल मात्रा'},
+  label_mandi:{en:'Mandi Price', hi:'मंडी भाव'},
+  label_offer:{en:'Offer Price', hi:'ऑफर भाव'},
+  btn_details:{en:'ℹ️ Full Details', hi:'ℹ️ पूरा विवरण'},
+  btn_view_offers:{en:'View Offers', hi:'ऑफर देखें'},
+  offers_tab_title:{en:'Buyer Offers on Your Listings', hi:'आपकी फसलों पर खरीदार ऑफर'},
+  offers_tab_sub:{en:'Accept or reject each offer. Accepting adds it straight to your orders.', hi:'हर ऑफर को स्वीकार या अस्वीकार करें। स्वीकार करते ही यह आपके ऑर्डर में जुड़ जाएगा।'},
+  offers_none:{en:'No offers yet. List a crop to start receiving offers from verified buyers.', hi:'अभी कोई ऑफर नहीं है। खरीदारों से ऑफर पाने के लिए फसल सूचीबद्ध करें।'},
+  accept_btn:{en:'✅ Accept', hi:'✅ स्वीकार करें'},
+  reject_btn:{en:'✖ Reject', hi:'✖ अस्वीकार करें'},
+  status_pending:{en:'Pending', hi:'लंबित'},
+  status_accepted:{en:'Accepted', hi:'स्वीकृत'},
+  status_rejected:{en:'Rejected', hi:'अस्वीकृत'},
+  total_label:{en:'Total', hi:'कुल राशि'},
+  earn_total:{en:'Total Deal Value', hi:'कुल सौदा मूल्य'},
+  earn_pending:{en:'Pending Payment', hi:'लंबित भुगतान'},
+  earn_qty:{en:'Total Quintals Sold', hi:'कुल बिकी मात्रा'},
+  bank_h:{en:'Your Bank Details', hi:'आपका बैंक विवरण'},
+  bank_sub:{en:'Save once — payments go straight to this account, no cash needed.', hi:'एक बार सहेजें — भुगतान सीधे इसी खाते में भेजा जाएगा, नकद की ज़रूरत नहीं।'},
+  bank_name_lbl:{en:'Account Holder Name', hi:'खाताधारक का नाम'},
+  bank_bankname_lbl:{en:'Bank Name', hi:'बैंक का नाम'},
+  bank_acc_lbl:{en:'Account Number', hi:'खाता संख्या'},
+  bank_ifsc_lbl:{en:'IFSC Code', hi:'IFSC कोड'},
+  bank_upi_lbl:{en:'UPI ID (optional)', hi:'UPI ID (वैकल्पिक)'},
+  bank_save_btn:{en:'Save Bank Details', hi:'बैंक विवरण सहेजें'},
+  transport_h:{en:'Transport & Pickup', hi:'परिवहन व उठान'},
+  transport_sub:{en:"We'll suggest the right vehicle and cost based on your quantity.", hi:'हम आपकी मात्रा के अनुसार सही वाहन व अनुमानित लागत सुझाएंगे।'},
+  transport_need_lbl:{en:'Do you need pickup transport?', hi:'क्या आपको उठान के लिए परिवहन चाहिए?'},
+  transport_need_yes:{en:'Yes, arrange transport for me', hi:'हां, मेरे लिए परिवहन की व्यवस्था करें'},
+  transport_need_no:{en:'No, I will deliver myself', hi:'नहीं, मैं स्वयं पहुंचाऊंगा'},
+  transport_loc_lbl:{en:'Pickup Village / Address', hi:'उठान गांव / पता'},
+  transport_date_lbl:{en:'Preferred Pickup Date', hi:'पसंदीदा उठान तिथि'},
+  transport_save_btn:{en:'Save & Get Vehicle Suggestion', hi:'सहेजें व वाहन सुझाव पाएं'},
+  orders_h:{en:'My Orders & Payment Status', hi:'मेरे ऑर्डर व भुगतान स्थिति'},
+  th_order:{en:'Order', hi:'ऑर्डर'},
+  th_buyer:{en:'Buyer', hi:'खरीदार'},
+  th_amount:{en:'Amount', hi:'राशि'},
+  th_payment:{en:'Payment', hi:'भुगतान'},
+  th_transport:{en:'Transport', hi:'परिवहन'},
+  buyer_greet_sub:{en:'Browse verified, graded produce and send offers straight to farmers — no middleman.', hi:'सत्यापित व ग्रेडेड उपज ब्राउज़ करें, सीधे किसान को ऑफर भेजें — कोई बिचौलिया नहीं।'},
+  buyer_b1:{en:'✓ Verified, graded produce', hi:'✓ सत्यापित व ग्रेडेड उपज'},
+  buyer_b2:{en:'✓ Direct contact with farmers', hi:'✓ सीधा किसान से संपर्क'},
+  buyer_b3:{en:'✓ Transparent mandi price reference', hi:'✓ पारदर्शी मंडी भाव संदर्भ'},
+  buyer_stat_sent:{en:'Offers Sent', hi:'भेजे गए ऑफर'},
+  buyer_stat_accepted:{en:'Deals Accepted', hi:'स्वीकृत सौदे'},
+  buyer_stat_spend:{en:'Total Purchase Value', hi:'कुल खरीद मूल्य'},
+  buyer_sent_title:{en:'My Sent Offers', hi:'मेरे भेजे गए ऑफर'},
+  login_tab_farmer:{en:'Farmer Login', hi:'किसान लॉगिन', pa:'ਕਿਸਾਨ ਲਾਗਿਨ', mr:'शेतकरी लॉगिन', gu:'ખેડૂત લૉગિન', bn:'কৃষক লগইন', ta:'விவசாயி உள்நுழைவு', te:'రైతు లాగిన్', kn:'ರೈತ ಲಾಗಿನ್', ml:'കർഷക ലോഗിൻ', or:'କୃଷକ ଲଗଇନ୍', as:'কৃষক লগইন', ur:'کسان لاگ ان'},
+  login_tab_buyer:{en:'Buyer Login', hi:'खरीदार लॉगिन', pa:'ਖਰੀਦਦਾਰ ਲਾਗਿਨ', mr:'खरेदीदार लॉगिन', gu:'ખરીદનાર લૉગિન', bn:'ক্রেতা লগইন', ta:'வாங்குபவர் உள்நுழைவு', te:'కొనుగోలుదారు లాగిన్', kn:'ಖರೀದಿದಾರ ಲಾಗಿನ್', ml:'വാങ്ങുന്നയാളുടെ ലോഗിൻ', or:'କ୍ରେତା ଲଗଇନ୍', as:'ক্ৰেতা লগইন', ur:'خریدار لاگ ان'},
+  login_farmer_user_lbl:{en:'Mobile Number / Username', hi:'मोबाइल नंबर / यूज़रनेम', pa:'ਮੋਬਾਈਲ ਨੰਬਰ / ਯੂਜ਼ਰਨੇਮ', mr:'मोबाइल क्रमांक / युजरनेम', gu:'મોબાઇલ નંબર / યુઝરનેમ', bn:'মোবাইল নম্বর / ইউজারনেম', ta:'மொபைல் எண் / பயனர்பெயர்', te:'మొబైల్ నంబర్ / యూజర్ నేమ్', kn:'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ / ಬಳಕೆದಾರ ಹೆಸರು', ml:'മൊബൈൽ നമ്പർ / യൂസർനെയിം', or:'ମୋବାଇଲ୍ ନମ୍ବର / ୟୁଜରନେମ', as:'মবাইল নম্বৰ / ইউজাৰনেম', ur:'موبائل نمبر / یوزرنیم'},
+  login_buyer_user_lbl:{en:'Company Username', hi:'कंपनी यूज़रनेम', pa:'ਕੰਪਨੀ ਯੂਜ਼ਰਨੇਮ', mr:'कंपनी युजरनेम', gu:'કંપની યુઝરનેમ', bn:'কোম্পানি ইউজারনেম', ta:'நிறுவன பயனர்பெயர்', te:'కంపెనీ యూజర్ నేమ్', kn:'ಕಂಪನಿ ಬಳಕೆದಾರ ಹೆಸರು', ml:'കമ്പനി യൂസർനെയിം', or:'କମ୍ପାନୀ ୟୁଜରନେମ', as:'কোম্পানী ইউজাৰনেম', ur:'کمپنی یوزرنیم'},
+  login_pass_lbl:{en:'Password', hi:'पासवर्ड', pa:'ਪਾਸਵਰਡ', mr:'पासवर्ड', gu:'પાસવર્ડ', bn:'পাসওয়ার্ড', ta:'கடவுச்சொல்', te:'పాస్‌వర్డ్', kn:'ಪಾಸ್‌ವರ್ಡ್', ml:'പാസ്‌വേഡ്', or:'ପାସୱାର୍ଡ', as:'পাছৱৰ্ড', ur:'پاس ورڈ'},
+  login_btn:{en:'Login', hi:'लॉगिन करें', pa:'ਲਾਗਿਨ ਕਰੋ', mr:'लॉगिन करा', gu:'લૉગિન કરો', bn:'লগইন করুন', ta:'உள்நுழைக', te:'లాగిన్ చేయండి', kn:'ಲಾಗಿನ್ ಮಾಡಿ', ml:'ലോഗിൻ ചെയ്യുക', or:'ଲଗଇନ୍ କରନ୍ତୁ', as:'লগইন কৰক', ur:'لاگ ان کریں'},
+  login_demo_lbl:{en:'For demo use:', hi:'डेमो हेतु उपयोग करें:', pa:'ਡੈਮੋ ਲਈ ਵਰਤੋਂ:', mr:'डेमोसाठी वापरा:', gu:'ડેમો માટે ઉપયોગ કરો:', bn:'ডেমোর জন্য ব্যবহার করুন:', ta:'டெமோவிற்கு பயன்படுத்தவும்:', te:'డెమో కోసం ఉపయోగించండి:', kn:'ಡೆಮೊಗಾಗಿ ಬಳಸಿ:', ml:'ഡെമോയ്ക്ക് ഉപയോഗിക്കുക:', or:'ଡେମୋ ପାଇଁ ବ୍ୟବହାର କରନ୍ତୁ:', as:'ডেমোৰ বাবে ব্যৱহাৰ কৰক:', ur:'ڈیمو کے لیے استعمال کریں:'},
+  modal_title:{en:'List a New Crop', hi:'नई फसल जोड़ें'},
+  modal_confirm:{en:'✓ Add to My Listings', hi:'✓ इसे मेरी सूची में जोड़ें'},
+  f_title:{en:'List Your Produce', hi:'अपनी उपज सूचीबद्ध करें', pa:'ਆਪਣੀ ਪੈਦਾਵਾਰ ਸੂਚੀਬੱਧ ਕਰੋ', mr:'तुमचे उत्पादन नोंदवा', gu:'તમારી ઉપજ યાદી કરો', bn:'আপনার ফসল তালিকাভুক্ত করুন', ta:'உங்கள் விளைபொருளை பட்டியலிடுங்கள்', te:'మీ ఉత్పత్తిని జాబితా చేయండి', kn:'ನಿಮ್ಮ ಉತ್ಪನ್ನವನ್ನು ಪಟ್ಟಿ ಮಾಡಿ', ml:'നിങ്ങളുടെ ഉൽപ്പന്നം ലിസ്റ്റ് ചെയ്യുക', or:'ଆପଣଙ୍କ ଉତ୍ପାଦନ ତାଲିକାଭୁକ୍ତ କରନ୍ତୁ', as:'আপোনাৰ উৎপাদন তালিকাভুক্ত কৰক', ur:'اپنی پیداوار درج کریں'},
+  f_crop_lbl:{en:'Crop', hi:'फसल', pa:'ਫਸਲ', mr:'पीक', gu:'પાક', bn:'ফসল', ta:'பயிர்', te:'పంట', kn:'ಬೆಳೆ', ml:'വിള', or:'ଫସଲ', as:'শস্য', ur:'فصل'},
+  f_qty_lbl:{en:'Quantity (quintals)', hi:'मात्रा (क्विंटल)', pa:'ਮਾਤਰਾ (ਕੁਇੰਟਲ)', mr:'प्रमाण (क्विंटल)', gu:'જથ્થો (ક્વિન્ટલ)', bn:'পরিমাণ (কুইন্টাল)', ta:'அளவு (குவிண்டால்)', te:'పరిమాణం (క్వింటాళ్లు)', kn:'ಪ್ರಮಾಣ (ಕ್ವಿಂಟಲ್)', ml:'അളവ് (ക്വിന്റൽ)', or:'ପରିମାଣ (କ୍ୱିଣ୍ଟାଲ)', as:'পৰিমাণ (কুইন্টাল)', ur:'مقدار (کوئنٹل)'},
+  f_grade_lbl:{en:'Quality Grade (self-assessed)', hi:'गुणवत्ता ग्रेड (स्व-मूल्यांकित)', pa:'ਗੁਣਵੱਤਾ ਗ੍ਰੇਡ (ਸਵੈ-ਮੁਲਾਂਕਿਤ)', mr:'गुणवत्ता श्रेणी (स्व-मूल्यांकित)', gu:'ગુણવત્તા ગ્રેડ (સ્વ-મૂલ્યાંકિત)', bn:'গুণমান গ্রেড (স্ব-মূল্যায়িত)', ta:'தர வகை (சுய மதிப்பீடு)', te:'నాణ్యత గ్రేడ్ (స్వీయ-మూల్యాంకనం)', kn:'ಗುಣಮಟ್ಟ ಗ್ರೇಡ್ (ಸ್ವಯಂ-ಮೌಲ್ಯಮಾಪನ)', ml:'ഗുണനിലവാര ഗ്രേഡ് (സ്വയം വിലയിരുത്തൽ)', or:'ଗୁଣବତ୍ତା ଗ୍ରେଡ୍ (ସ୍ୱ-ମୂଲ୍ୟାୟିତ)', as:'গুণগত মান গ্ৰেড (স্ব-মূল্যায়িত)', ur:'معیار گریڈ (خود جانچا گیا)'},
+  f_loc_lbl:{en:'Your District', hi:'आपका ज़िला', pa:'ਤੁਹਾਡਾ ਜ਼ਿਲ੍ਹਾ', mr:'तुमचा जिल्हा', gu:'તમારો જિલ્લો', bn:'আপনার জেলা', ta:'உங்கள் மாவட்டம்', te:'మీ జిల్లా', kn:'ನಿಮ್ಮ ಜಿಲ್ಲೆ', ml:'നിങ്ങളുടെ ജില്ല', or:'ଆପଣଙ୍କ ଜିଲ୍ଲା', as:'আপোনাৰ জিলা', ur:'آپ کا ضلع'},
+  f_photo_lbl:{en:'Add a Photo of Your Crop (optional)', hi:'फसल की फोटो जोड़ें (वैकल्पिक)', pa:'ਫਸਲ ਦੀ ਫੋਟੋ ਸ਼ਾਮਲ ਕਰੋ (ਵਿਕਲਪਿਕ)', mr:'पिकाचा फोटो जोडा (ऐच्छिक)', gu:'પાકનો ફોટો ઉમેરો (વૈકલ્પિક)', bn:'ফসলের ছবি যোগ করুন (ঐচ্ছিক)', ta:'உங்கள் பயிரின் புகைப்படத்தை சேர்க்கவும் (விருப்பம்)', te:'మీ పంట ఫోటోను జోడించండి (ఐచ్ఛికం)', kn:'ನಿಮ್ಮ ಬೆಳೆಯ ಫೋಟೋ ಸೇರಿಸಿ (ಐಚ್ಛಿಕ)', ml:'നിങ്ങളുടെ വിളയുടെ ഫോട്ടോ ചേർക്കുക (ഐച്ഛികം)', or:'ଆପଣଙ୍କ ଫସଲର ଫଟୋ ଯୋଡ଼ନ୍ତୁ (ଇଚ୍ଛାଧୀନ)', as:'আপোনাৰ শস্যৰ ফটো যোগ কৰক (ঐচ্ছিক)', ur:'اپنی فصل کی تصویر شامل کریں (اختیاری)'},
+  f_photo_hint:{en:'Clear photos build buyer trust and get better offers.', hi:'स्पष्ट फोटो से खरीदारों का भरोसा बढ़ता है और बेहतर ऑफर मिलते हैं।', pa:'ਸਪਸ਼ਟ ਫੋਟੋ ਖਰੀਦਦਾਰ ਦਾ ਭਰੋਸਾ ਵਧਾਉਂਦੀ ਹੈ।', mr:'स्पष्ट फोटोमुळे खरेदीदाराचा विश्वास वाढतो.', gu:'સ્પષ્ટ ફોટા ખરીદદારનો વિશ્વાસ વધારે છે.', bn:'স্পষ্ট ছবি ক্রেতার আস্থা বাড়ায়।', ta:'தெளிவான புகைப்படங்கள் நம்பிக்கையை அதிகரிக்கும்.', te:'స్పష్టమైన ఫోటోలు నమ్మకాన్ని పెంచుతాయి.', kn:'ಸ್ಪಷ್ಟ ಫೋಟೋಗಳು ವಿಶ್ವಾಸ ಹೆಚ್ಚಿಸುತ್ತವೆ.', ml:'വ്യക്തമായ ഫോട്ടോകൾ വിശ്വാസം വർദ്ധിപ്പിക്കുന്നു.', or:'ସ୍ପଷ୍ଟ ଫଟୋ ବିଶ୍ୱାସ ବଢ଼ାଏ।', as:'স্পষ্ট ফটোৱে বিশ্বাস বৃদ্ধি কৰে।', ur:'واضح تصاویر خریدار کا اعتماد بڑھاتی ہیں۔'},
+  f_moisture_lbl:{en:'Moisture (%)', hi:'नमी (%)', pa:'ਨਮੀ (%)', mr:'आर्द्रता (%)', gu:'ભેજ (%)', bn:'আর্দ্রতা (%)', ta:'ஈரப்பதம் (%)', te:'తేమ (%)', kn:'ತೇವಾಂಶ (%)', ml:'ഈർപ്പം (%)', or:'ଆର୍ଦ୍ରତା (%)', as:'আৰ্দ্ৰতা (%)', ur:'نمی (%)'},
+  f_harvest_lbl:{en:'Harvest Date', hi:'कटाई की तारीख', pa:'ਵਾਢੀ ਦੀ ਮਿਤੀ', mr:'काढणीची तारीख', gu:'લણણીની તારીખ', bn:'ফসল কাটার তারিখ', ta:'அறுவடை தேதி', te:'పంట కోత తేదీ', kn:'ಕೊಯ್ಲು ದಿನಾಂಕ', ml:'വിളവെടുപ്പ് തീയതി', or:'ଅମଳ ତାରିଖ', as:'শস্য চপোৱাৰ তাৰিখ', ur:'کٹائی کی تاریخ'},
+  f_packaging_lbl:{en:'Packaging Type', hi:'पैकेजिंग प्रकार', pa:'ਪੈਕੇਜਿੰਗ ਕਿਸਮ', mr:'पॅकेजिंग प्रकार', gu:'પેકેજિંગ પ્રકાર', bn:'প্যাকেজিং ধরন', ta:'பேக்கேஜிங் வகை', te:'ప్యాకేజింగ్ రకం', kn:'ಪ್ಯಾಕೇಜಿಂಗ್ ಪ್ರಕಾರ', ml:'പാക്കേജിംഗ് തരം', or:'ପ୍ୟାକେଜିଂ ପ୍ରକାର', as:'পেকেজিং প্ৰকাৰ', ur:'پیکیجنگ کی قسم'},
+  pack_loose:{en:'Loose', hi:'खुला (लूज़)', pa:'ਖੁੱਲ੍ਹਾ', mr:'सैल (लूज)', gu:'છૂટક', bn:'খোলা', ta:'தளர்வான', te:'లూజ్', kn:'ಲೂಸ್', ml:'ലൂസ്', or:'ଖୋଲା', as:'লুজ', ur:'کھلا'},
+  pack_jute:{en:'Jute Bag', hi:'जूट बोरी', pa:'ਜੂਟ ਬੋਰੀ', mr:'गोणपाट पिशवी', gu:'શણની બોરી', bn:'চটের বস্তা', ta:'சணல் மூட்டை', te:'జనపనార సంచి', kn:'ಜೂಟ್ ಚೀಲ', ml:'ചണ ചാക്ക്', or:'ଜୁଟ୍ ବସ୍ତା', as:'জুট বস্তা', ur:'جوٹ کی بوری'},
+  pack_pp:{en:'PP/Plastic Bag', hi:'PP/प्लास्टिक बोरी', pa:'PP/ਪਲਾਸਟਿਕ ਬੋਰੀ', mr:'PP/प्लास्टिक पिशवी', gu:'PP/પ્લાસ્ટિક બોરી', bn:'PP/প্লাস্টিক বস্তা', ta:'PP/பிளாஸ்டிக் மூட்டை', te:'PP/ప్లాస్టిక్ సంచి', kn:'PP/ಪ್ಲಾಸ್ಟಿಕ್ ಚೀಲ', ml:'PP/പ്ലാസ്റ്റിക് ചാക്ക്', or:'PP/ପ୍ଲାଷ୍ଟିକ୍ ବସ୍ତା', as:'PP/প্লাষ্টিক বস্তা', ur:'PP/پلاسٹک بوری'},
+  pack_crate:{en:'Crate', hi:'क्रेट', pa:'ਕਰੇਟ', mr:'क्रेट', gu:'ક્રેટ', bn:'ক্রেট', ta:'கிரேட்', te:'క్రేట్', kn:'ಕ್ರೇಟ್', ml:'ക്രേറ്റ്', or:'କ୍ରେଟ୍', as:'ক্ৰেট', ur:'کریٹ'},
+  f_organic_lbl:{en:'Organic?', hi:'जैविक (ऑर्गेनिक)?', pa:'ਜੈਵਿਕ (ਆਰਗੈਨਿਕ)?', mr:'सेंद्रिय (ऑरगॅनिक)?', gu:'ઓર્ગેનિક?', bn:'জৈব (অর্গানিক)?', ta:'இயற்கை (ஆர்கானிக்)?', te:'సేంద్రియ (ఆర్గానిక్)?', kn:'ಸಾವಯವ (ಆರ್ಗ್ಯಾನಿಕ್)?', ml:'ജൈവ (ഓർഗാനിക്)?', or:'ଜୈବିକ (ଅର୍ଗାନିକ)?', as:'জৈৱিক (অৰ্গানিক)?', ur:'نامیاتی (آرگینک)؟'},
+  organic_no:{en:'No', hi:'नहीं', pa:'ਨਹੀਂ', mr:'नाही', gu:'ના', bn:'না', ta:'இல்லை', te:'కాదు', kn:'ಇಲ್ಲ', ml:'ഇല്ല', or:'ନା', as:'নহয়', ur:'نہیں'},
+  organic_yes:{en:'Yes, Certified', hi:'हाँ, प्रमाणित', pa:'ਹਾਂ, ਪ੍ਰਮਾਣਿਤ', mr:'होय, प्रमाणित', gu:'હા, પ્રમાણિત', bn:'হ্যাঁ, প্রত্যয়িত', ta:'ஆம், சான்றளிக்கப்பட்டது', te:'అవును, ధృవీకరించబడింది', kn:'ಹೌದು, ಪ್ರಮಾಣೀಕೃತ', ml:'അതെ, സാക്ഷ്യപ്പെടുത്തിയത്', or:'ହଁ, ପ୍ରମାଣିତ', as:'হয়, প্ৰমাণিত', ur:'ہاں، تصدیق شدہ'},
+  organic_untested:{en:'Organic, Not Certified', hi:'जैविक पर अप्रमाणित', pa:'ਜੈਵਿਕ ਪਰ ਅਪ੍ਰਮਾਣਿਤ', mr:'सेंद्रिय पण अप्रमाणित', gu:'ઓર્ગેનિક પણ અપ્રમાણિત', bn:'জৈব তবে অপ্রত্যয়িত', ta:'இயற்கை, சான்றளிக்கப்படவில்லை', te:'సేంద్రియం, ధృవీకరించబడలేదు', kn:'ಸಾವಯವ, ಪ್ರಮಾಣೀಕೃತವಲ್ಲ', ml:'ജൈവം, സാക്ഷ്യപ്പെടുത്തിയിട്ടില്ല', or:'ଜୈବିକ, ଅପ୍ରମାଣିତ', as:'জৈৱিক, অপ্ৰমাণিত', ur:'نامیاتی، غیر تصدیق شدہ'},
+  f_btn:{en:'Get AI Price Suggestion & Match Buyers', hi:'AI मूल्य सुझाव पाएं और खरीदार खोजें', pa:'AI ਕੀਮਤ ਸੁਝਾਅ ਪਾਓ ਅਤੇ ਖਰੀਦਦਾਰ ਲੱਭੋ', mr:'AI किंमत सूचना मिळवा व खरेदीदार शोधा', gu:'AI ભાવ સૂચન મેળવો અને ખરીદદાર શોધો', bn:'AI মূল্য পরামর্শ পান ও ক্রেতা খুঁজুন', ta:'AI விலை பரிந்துரையைப் பெறுங்கள் & வாங்குபவரைப் பொருத்துங்கள்', te:'AI ధర సూచన పొందండి & కొనుగోలుదారులను సరిపోల్చండి', kn:'AI ಬೆಲೆ ಸಲಹೆ ಪಡೆಯಿರಿ ಮತ್ತು ಖರೀದಿದಾರರನ್ನು ಹೊಂದಿಸಿ', ml:'AI വില നിർദ്ദേശം നേടുക & വാങ്ങുന്നവരെ കണ്ടെത്തുക', or:'AI ମୂଲ୍ୟ ପରାମର୍ଶ ପାଆନ୍ତୁ ଏବଂ କ୍ରେତା ଖୋଜନ୍ତୁ', as:'AI দাম পৰামৰ্শ লওক আৰু ক্ৰেতা বিচাৰক', ur:'AI قیمت کی تجویز حاصل کریں اور خریدار تلاش کریں'},
+  b_title:{en:'Browse Produce Listings', hi:'उपज सूचियां देखें', pa:'ਪੈਦਾਵਾਰ ਸੂਚੀਆਂ ਵੇਖੋ', mr:'उत्पादन याद्या पहा', gu:'ઉપજ યાદીઓ બ્રાઉઝ કરો', bn:'ফসল তালিকা দেখুন', ta:'விளைபொருள் பட்டியல்களை உலாவவும்', te:'ఉత్పత్తి జాబితాలను బ్రౌజ్ చేయండి', kn:'ಉತ್ಪನ್ನ ಪಟ್ಟಿಗಳನ್ನು ವೀಕ್ಷಿಸಿ', ml:'ഉൽപ്പന്ന ലിസ്റ്റിംഗുകൾ ബ്രൗസ് ചെയ്യുക', or:'ଉତ୍ପାଦନ ତାଲିକା ଦେଖନ୍ତୁ', as:'উৎপাদন তালিকা চাওক', ur:'پیداوار کی فہرستیں دیکھیں'},
+  b_filter_lbl:{en:'Filter by crop', hi:'फसल के अनुसार फ़िल्टर करें', pa:'ਫਸਲ ਅਨੁਸਾਰ ਫਿਲਟਰ ਕਰੋ', mr:'पिकानुसार फिल्टर करा', gu:'પાક મુજબ ફિલ્ટર કરો', bn:'ফসল অনুযায়ী ফিল্টার করুন', ta:'பயிர் வாரியாக வடிகட்டவும்', te:'పంట ద్వారా ఫిల్టర్ చేయండి', kn:'ಬೆಳೆಯಿಂದ ಫಿಲ್ಟರ್ ಮಾಡಿ', ml:'വിള അനുസരിച്ച് ഫിൽട്ടർ ചെയ്യുക', or:'ଫସଲ ଅନୁସାରେ ଫିଲ୍ଟର କରନ୍ତୁ', as:'শস্য অনুসৰি ফিল্টাৰ কৰক', ur:'فصل کے مطابق فلٹر کریں'},
+  p_title:{en:"Today's Mandi Price Reference", hi:'आज का मंडी मूल्य संदर्भ', pa:'ਅੱਜ ਦਾ ਮੰਡੀ ਕੀਮਤ ਹਵਾਲਾ', mr:'आजचा बाजारभाव संदर्भ', gu:'આજનો મંડી ભાવ સંદર્ભ', bn:'আজকের মান্ডি মূল্য তথ্য', ta:'இன்றைய மண்டி விலை தகவல்', te:'నేటి మండి ధర సమాచారం', kn:'ಇಂದಿನ ಮಂಡಿ ಬೆಲೆ ಮಾಹಿತಿ', ml:'ഇന്നത്തെ മണ്ടി വില വിവരം', or:'ଆଜିର ମଣ୍ଡି ମୂଲ୍ୟ ସୂଚନା', as:'আজিৰ মাণ্ডি দাম তথ্য', ur:'آج کی منڈی قیمت کی معلومات'},
+  p_compare:{en:'Relative Price Comparison', hi:'सापेक्ष मूल्य तुलना', pa:'ਤੁਲਨਾਤਮਕ ਕੀਮਤ ਤੁਲਨਾ', mr:'तुलनात्मक किंमत आढावा', gu:'સાપેક્ષ ભાવ સરખામણી', bn:'তুলনামূলক মূল্য বিশ্লেষণ', ta:'ஒப்பீட்டு விலை ஒப்பீடு', te:'తులనాత్మక ధర పోలిక', kn:'ತುಲನಾತ್ಮಕ ಬೆಲೆ ಹೋಲಿಕೆ', ml:'താരതമ്യ വില താരതമ്യം', or:'ତୁଳନାତ୍ମକ ମୂଲ୍ୟ ତୁଳନା', as:'তুলনামূলক দাম তুলনা', ur:'تقابلی قیمت موازنہ'},
+  th_crop:{en:'Crop', hi:'फसल', pa:'ਫਸਲ', mr:'पीक', gu:'પાક', bn:'ফসল', ta:'பயிர்', te:'పంట', kn:'ಬೆಳೆ', ml:'വിള', or:'ଫସଲ', as:'শস্য', ur:'فصل'},
+  th_price:{en:'Avg ₹/quintal', hi:'औसत ₹/क्विंटल', pa:'ਔਸਤ ₹/ਕੁਇੰਟਲ', mr:'सरासरी ₹/क्विंटल', gu:'સરેરાશ ₹/ક્વિન્ટલ', bn:'গড় ₹/কুইন্টাল', ta:'சராசரி ₹/குவிண்டால்', te:'సగటు ₹/క్వింటాల్', kn:'ಸರಾಸರಿ ₹/ಕ್ವಿಂಟಲ್', ml:'ശരാശരി ₹/ക്വിന്റൽ', or:'ହାରାହାରି ₹/କ୍ୱିଣ୍ଟାଲ', as:'গড় ₹/কুইন্টাল', ur:'اوسط ₹/کوئنٹل'},
+  th_trend:{en:'Trend', hi:'रुझान', pa:'ਰੁਝਾਨ', mr:'कल', gu:'વલણ', bn:'প্রবণতা', ta:'போக்கு', te:'ధోరణి', kn:'ಪ್ರವೃತ್ತಿ', ml:'ട്രെൻഡ്', or:'ଧାରା', as:'প্ৰৱণতা', ur:'رجحان'},
+  footer:{en:'FASLYNK Prototype — interface demo, prices are illustrative', hi:'FASLYNK प्रोटोटाइप — इंटरफ़ेस डेमो, कीमतें उदाहरण मात्र हैं', pa:'FASLYNK ਪ੍ਰੋਟੋਟਾਈਪ — ਇੰਟਰਫੇਸ ਡੈਮੋ, ਕੀਮਤਾਂ ਉਦਾਹਰਨ ਮਾਤਰ ਹਨ', mr:'FASLYNK प्रोटोटाइप — इंटरफेस डेमो, किंमती केवळ उदाहरणासाठी', gu:'FASLYNK પ્રોટોટાઇપ — ઇન્ટરફેસ ડેમો, ભાવ માત્ર ઉદાહરણરૂપ છે', bn:'FASLYNK প্রোটোটাইপ — ইন্টারফেস ডেমো, দাম কেবল উদাহরণ', ta:'FASLYNK முன்மாதிரி — இடைமுக டெமோ, விலைகள் விளக்கத்திற்காக மட்டும்', te:'FASLYNK ప్రోటోటైప్ — ఇంటర్‌ఫేస్ డెమో, ధరలు ఉదాహరణ మాత్రమే', kn:'FASLYNK ಮೂಲಮಾದರಿ — ಇಂಟರ್ಫೇಸ್ ಡೆಮೊ, ಬೆಲೆಗಳು ವಿವರಣಾತ್ಮಕ', ml:'FASLYNK പ്രോട്ടോടൈപ്പ് — ഇന്റർഫേസ് ഡെമോ, വിലകൾ ഉദാഹരണത്തിന് മാത്രം', or:'FASLYNK ପ୍ରୋଟୋଟାଇପ — ଇଣ୍ଟରଫେସ ଡେମୋ, ମୂଲ୍ୟ କେବଳ ଉଦାହରଣ', as:'FASLYNK প্ৰʼটোʼটাইপ — ইণ্টাৰফেচ ডেমʼ, দাম কেৱল উদাহৰণ', ur:'FASLYNK پروٹو ٹائپ — انٹرفیس ڈیمو، قیمتیں محض مثال کے طور پر ہیں'},
+  crop_wheat:{en:'Wheat', hi:'गेहूं', pa:'ਕਣਕ', mr:'गहू', gu:'ઘઉં', bn:'গম', ta:'கோதுமை', te:'గోధుమ', kn:'ಗೋಧಿ', ml:'ഗോതമ്പ്', or:'ଗହମ', as:'ঘেঁহু', ur:'گندم'},
+  crop_rice:{en:'Rice', hi:'चावल', pa:'ਚੌਲ', mr:'तांदूळ', gu:'ચોખા', bn:'চাল', ta:'அரிசி', te:'బియ్యం', kn:'ಅಕ್ಕಿ', ml:'അരി', or:'ଚାଉଳ', as:'চাউল', ur:'چاول'},
+  crop_tomato:{en:'Tomato', hi:'टमाटर', pa:'ਟਮਾਟਰ', mr:'टोमॅटो', gu:'ટામેટા', bn:'টমেটো', ta:'தக்காளி', te:'టమాటా', kn:'ಟೊಮೇಟೊ', ml:'തക്കാളി', or:'ଟମାଟୋ', as:'বিলাহী', ur:'ٹماٹر'},
+  crop_onion:{en:'Onion', hi:'प्याज़', pa:'ਪਿਆਜ਼', mr:'कांदा', gu:'ડુંગળી', bn:'পেঁয়াজ', ta:'வெங்காயம்', te:'ఉల్లిపాయ', kn:'ಈರುಳ್ಳಿ', ml:'ഉള്ളി', or:'ପିଆଜ', as:'পিয়াঁজ', ur:'پیاز'},
+  crop_potato:{en:'Potato', hi:'आलू', pa:'ਆਲੂ', mr:'बटाटा', gu:'બટાકા', bn:'আলু', ta:'உருளைக்கிழங்கு', te:'బంగాళదుంప', kn:'ಆಲೂಗಡ್ಡೆ', ml:'ഉരുളക്കിഴങ്ങ്', or:'ଆଳୁ', as:'আলু', ur:'آلو'},
+  crop_cotton:{en:'Cotton', hi:'कपास', pa:'ਕਪਾਹ', mr:'कापूस', gu:'કપાસ', bn:'তুলা', ta:'பருத்தி', te:'పత్తి', kn:'ಹತ್ತಿ', ml:'പരുത്തി', or:'କପା', as:'কপাহ', ur:'کپاس'},
+  crop_mustard:{en:'Mustard', hi:'सरसों'},
+  crop_soybean:{en:'Soybean', hi:'सोयाबीन'},
+  crop_chana:{en:'Chana (Gram)', hi:'चना'},
+  crop_arhar:{en:'Arhar (Tur)', hi:'अरहर'},
+  crop_all:{en:'All crops', hi:'सभी फसलें', pa:'ਸਾਰੀਆਂ ਫਸਲਾਂ', mr:'सर्व पिके', gu:'બધા પાક', bn:'সব ফসল', ta:'அனைத்து பயிர்கள்', te:'అన్ని పంటలు', kn:'ಎಲ್ಲಾ ಬೆಳೆಗಳು', ml:'എല്ലാ വിളകളും', or:'ସମସ୍ତ ଫସଲ', as:'সকলো শস্য', ur:'تمام فصلیں'},
+  grade_a:{en:'Grade A — Premium, uniform size, no damage', hi:'ग्रेड A — प्रीमियम, समान आकार, बिना नुकसान', pa:'ਗ੍ਰੇਡ A — ਪ੍ਰੀਮੀਅਮ, ਬਿਨਾਂ ਨੁਕਸਾਨ', mr:'ग्रेड A — प्रीमियम, एकसमान आकार, नुकसान नाही', gu:'ગ્રેડ A — પ્રીમિયમ, સમાન કદ, નુકસાન વગર', bn:'গ্রেড A — প্রিমিয়াম, সমান আকার, ক্ষতিহীন', ta:'கிரேடு A — பிரீமியம், சேதமில்லாதது', te:'గ్రేడ్ A — ప్రీమియం, నష్టం లేనిది', kn:'ಗ್ರೇಡ್ A — ಪ್ರೀಮಿಯಂ, ಹಾನಿ ಇಲ್ಲ', ml:'ഗ്രേഡ് A — പ്രീമിയം, കേടില്ലാത്തത്', or:'ଗ୍ରେଡ୍ A — ପ୍ରିମିୟମ, କ୍ଷତି ନାହିଁ', as:'গ্ৰেড A — প্ৰিমিয়াম, ক্ষতিহীন', ur:'گریڈ A — پریمیم، بغیر نقصان کے'},
+  grade_b:{en:'Grade B — Good, minor blemishes', hi:'ग्रेड B — अच्छा, मामूली दाग', pa:'ਗ੍ਰੇਡ B — ਚੰਗਾ, ਮਾਮੂਲੀ ਦਾਗ', mr:'ग्रेड B — चांगले, किरकोळ डाग', gu:'ગ્રેડ B — સારું, નાના ડાઘ', bn:'গ্রেড B — ভালো, সামান্য দাগ', ta:'கிரேடு B — நல்லது, சிறு கறை', te:'గ్రేడ్ B — మంచిది, చిన్న మచ్చలు', kn:'ಗ್ರೇಡ್ B — ಒಳ್ಳೆಯದು, ಸಣ್ಣ ಕಲೆಗಳು', ml:'ഗ്രേഡ് B — നല്ലത്, ചെറിയ കറകൾ', or:'ଗ୍ରେଡ୍ B — ଭଲ, ଛୋଟ ଦାଗ', as:'গ্ৰেড B — ভাল, সামান্য দাগ', ur:'گریڈ B — اچھا، معمولی داغ'},
+  grade_c:{en:'Grade C — Average, mixed quality', hi:'ग्रेड C — औसत, मिश्रित गुणवत्ता', pa:'ਗ੍ਰੇਡ C — ਔਸਤ ਗੁਣਵੱਤਾ', mr:'ग्रेड C — सरासरी, मिश्र दर्जा', gu:'ગ્રેડ C — સરેરાશ, મિશ્ર ગુણવત્તા', bn:'গ্রেড C — গড়, মিশ্র মান', ta:'கிரேடு C — சராசரி, கலப்பு தரம்', te:'గ్రేడ్ C — సగటు, మిశ్రమ నాణ్యత', kn:'ಗ್ರೇಡ್ C — ಸರಾಸರಿ, ಮಿಶ್ರ ಗುಣಮಟ್ಟ', ml:'ഗ്രേഡ് C — ശരാശരി, മിശ്രിത നിലവാരം', or:'ଗ୍ରେଡ୍ C — ହାରାହାରି, ମିଶ୍ର ଗୁଣବତ୍ତା', as:'গ্ৰেড C — গড়, মিহলি মান', ur:'گریڈ C — اوسط، ملی جلی معیار'},
+  ph_search:{en:'Type crop or district name...', hi:'फसल या जिले का नाम लिखें...', pa:'ਫਸਲ ਜਾਂ ਜ਼ਿਲ੍ਹੇ ਦਾ ਨਾਮ ਲਿਖੋ...', mr:'पीक किंवा जिल्ह्याचे नाव लिहा...', gu:'પાક અથવા જિલ્લાનું નામ લખો...', bn:'ফসল বা জেলার নাম লিখুন...', ta:'பயிர் அல்லது மாவட்டத்தின் பெயரை உள்ளிடவும்...', te:'పంట లేదా జిల్లా పేరు టైప్ చేయండి...', kn:'ಬೆಳೆ ಅಥವಾ ಜಿಲ್ಲೆಯ ಹೆಸರನ್ನು ಬರೆಯಿರಿ...', ml:'വിള അല്ലെങ്കിൽ ജില്ലയുടെ പേര് ടൈപ്പ് ചെയ്യുക...', or:'ଫସଲ କିମ୍ବା ଜିଲ୍ଲାର ନାମ ଲେଖନ୍ତୁ...', as:'শস্য বা জিলাৰ নাম লিখক...', ur:'فصل یا ضلع کا نام لکھیں...'},
+  ph_bank_name:{en:'e.g. Harpreet Singh', hi:'जैसे Harpreet Singh', pa:'ਜਿਵੇਂ Harpreet Singh', mr:'उदा. Harpreet Singh', gu:'દા.ત. Harpreet Singh', bn:'যেমন Harpreet Singh', ta:'எ.கா. Harpreet Singh', te:'ఉదా. Harpreet Singh', kn:'ಉದಾ. Harpreet Singh', ml:'ഉദാ. Harpreet Singh', or:'ଯଥା Harpreet Singh', as:'যেনে Harpreet Singh', ur:'مثلاً Harpreet Singh'},
+  ph_bank_bankname:{en:'e.g. State Bank of India', hi:'जैसे State Bank of India', pa:'ਜਿਵੇਂ State Bank of India', mr:'उदा. State Bank of India', gu:'દા.ત. State Bank of India', bn:'যেমন State Bank of India', ta:'எ.கா. State Bank of India', te:'ఉదా. State Bank of India', kn:'ಉದಾ. State Bank of India', ml:'ഉദാ. State Bank of India', or:'ଯଥା State Bank of India', as:'যেনে State Bank of India', ur:'مثلاً State Bank of India'},
+  ph_bank_acc:{en:'e.g. 000123456789', hi:'जैसे 000123456789', pa:'ਜਿਵੇਂ 000123456789', mr:'उदा. 000123456789', gu:'દા.ત. 000123456789', bn:'যেমন 000123456789', ta:'எ.கா. 000123456789', te:'ఉదా. 000123456789', kn:'ಉದಾ. 000123456789', ml:'ഉദാ. 000123456789', or:'ଯଥା 000123456789', as:'যেনে 000123456789', ur:'مثلاً 000123456789'},
+  ph_bank_ifsc:{en:'e.g. SBIN0001234', hi:'जैसे SBIN0001234', pa:'ਜਿਵੇਂ SBIN0001234', mr:'उदा. SBIN0001234', gu:'દા.ત. SBIN0001234', bn:'যেমন SBIN0001234', ta:'எ.கா. SBIN0001234', te:'ఉదా. SBIN0001234', kn:'ಉದಾ. SBIN0001234', ml:'ഉദാ. SBIN0001234', or:'ଯଥା SBIN0001234', as:'যেনে SBIN0001234', ur:'مثلاً SBIN0001234'},
+  ph_bank_upi:{en:'e.g. name@upi', hi:'जैसे name@upi', pa:'ਜਿਵੇਂ name@upi', mr:'उदा. name@upi', gu:'દા.ત. name@upi', bn:'যেমন name@upi', ta:'எ.கா. name@upi', te:'ఉదా. name@upi', kn:'ಉದಾ. name@upi', ml:'ഉദാ. name@upi', or:'ଯଥା name@upi', as:'যেনে name@upi', ur:'مثلاً name@upi'},
+  ph_transport_loc:{en:'e.g. Village Rampur, Patiala', hi:'जैसे गांव रामपुर, पटियाला', pa:'ਜਿਵੇਂ ਪਿੰਡ ਰਾਮਪੁਰ, ਪਟਿਆਲਾ', mr:'उदा. गाव रामपूर, पटियाळा', gu:'દા.ત. ગામ રામપુર, પટિયાલા', bn:'যেমন গ্রাম রামপুর, পাতিয়ালা', ta:'எ.கா. கிராமம் ராம்பூர், பட்டியாலா', te:'ఉదా. గ్రామం రాంపూర్, పాటియాలా', kn:'ಉದಾ. ಗ್ರಾಮ ರಾಂಪುರ, ಪಟಿಯಾಲಾ', ml:'ഉദാ. ഗ്രാമം രാംപൂർ, പട്യാല', or:'ଯଥା ଗ୍ରାମ ରାମପୁର, ପାଟିଆଲା', as:'যেনে গাঁও ৰামপুৰ, পাতিয়ালা', ur:'مثلاً گاؤں رام پور، پٹیالہ'},
+  ph_f_loc:{en:'e.g. Patiala, Punjab', hi:'जैसे Patiala, Punjab', pa:'ਜਿਵੇਂ Patiala, Punjab', mr:'उदा. Patiala, Punjab', gu:'દા.ત. Patiala, Punjab', bn:'যেমন Patiala, Punjab', ta:'எ.கா. Patiala, Punjab', te:'ఉదా. Patiala, Punjab', kn:'ಉದಾ. Patiala, Punjab', ml:'ഉദാ. Patiala, Punjab', or:'ଯଥା Patiala, Punjab', as:'যেনে Patiala, Punjab', ur:'مثلاً Patiala, Punjab'},
+  ph_offer_input:{en:'Offer ₹/quintal', hi:'₹/क्विंटल ऑफर', pa:'₹/ਕੁਇੰਟਲ ਆਫ਼ਰ', mr:'₹/क्विंटल ऑफर', gu:'₹/ક્વિન્ટલ ઑફર', bn:'₹/কুইন্টাল অফার', ta:'₹/குவிண்டால் சலுகை', te:'₹/క్వింటాల్ ఆఫర్', kn:'₹/ಕ್ವಿಂಟಲ್ ಆಫರ್', ml:'₹/ക്വിന്റൽ ഓഫർ', or:'₹/କ୍ୱିଣ୍ଟାଲ ଅଫର', as:'₹/কুইণ্টাল অফাৰ', ur:'₹/کوئنٹل آفر'},
+  v_l1_variety:{en:'Sharbati Wheat (Kanak)', hi:'शरबती गेहूं (कनक)', pa:'ਸ਼ਰਬਤੀ ਕਣਕ (ਕਨਕ)', mr:'शरबती गहू (कनक)', gu:'શરબતી ઘઉં (કનક)', bn:'শরবতী গম (কনক)', ta:'சர்பதி கோதுமை (கனக்)', te:'శర్బతీ గోధుమ (కనక్)', kn:'ಶರಬತಿ ಗೋಧಿ (ಕನಕ್)', ml:'ശർബതി ഗോതമ്പ് (കനക്)', or:'ଶରବତୀ ଗହମ (କନକ)', as:'চৰবতী ঘেঁহু (কনক)', ur:'شربتی گیہوں (کنک)'},
+  v_l1_code:{en:'C-306 Sharbati', hi:'C-306 शरबती', pa:'C-306 ਸ਼ਰਬਤੀ', mr:'C-306 शरबती', gu:'C-306 શરબતી', bn:'C-306 শরবতী', ta:'C-306 சர்பதி', te:'C-306 శర్బతీ', kn:'C-306 ಶರಬತಿ', ml:'C-306 ശർബതി', or:'C-306 ଶରବତୀ', as:'C-306 চৰবতী', ur:'C-306 شربتی'},
+  v_l2_variety:{en:'Basmati 1121 Paddy', hi:'बासमती 1121 धान', pa:'ਬਾਸਮਤੀ 1121 ਝੋਨਾ', mr:'बासमती 1121 भात', gu:'બાસમતી 1121 ડાંગર', bn:'বাসমতী 1121 ধান', ta:'பாஸ்மதி 1121 நெல்', te:'బాస్మతి 1121 వరి', kn:'ಬಾಸ್ಮತಿ 1121 ಭತ್ತ', ml:'ബാസ്മതി 1121 നെല്ല്', or:'ବାସମତୀ 1121 ଧାନ', as:'বাছমতী 1121 ধান', ur:'باسمتی 1121 دھان'},
+  v_l2_code:{en:'1121 Super Fine', hi:'1121 सुपर फाइन', pa:'1121 ਸੁਪਰ ਫਾਈਨ', mr:'1121 सुपर फाइन', gu:'1121 સુપર ફાઇન', bn:'1121 সুপার ফাইন', ta:'1121 சூப்பர் ஃபைன்', te:'1121 సూపర్ ఫైన్', kn:'1121 ಸೂಪರ್ ಫೈನ್', ml:'1121 സൂപ്പർ ഫൈൻ', or:'1121 ସୁପର ଫାଇନ', as:'1121 ছুপাৰ ফাইন', ur:'1121 سپر فائن'},
+  v_l3_variety:{en:'Mustard (Yellow)', hi:'सरसों (पीली)', pa:'ਸਰ੍ਹੋਂ (ਪੀਲੀ)', mr:'मोहरी (पिवळी)', gu:'રાઈ (પીળી)', bn:'সরিষা (হলুদ)', ta:'கடுகு (மஞ்சள்)', te:'ఆవాలు (పసుపు)', kn:'ಸಾಸಿವೆ (ಹಳದಿ)', ml:'കടുക് (മഞ്ഞ)', or:'ସୋରିଷ (ହଳଦିଆ)', as:'সৰিয়হ (হালধীয়া)', ur:'سرسوں (پیلی)'},
+  v_l3_code:{en:'Yellow Mustard', hi:'पीली सरसों', pa:'ਪੀਲੀ ਸਰ੍ਹੋਂ', mr:'पिवळी मोहरी', gu:'પીળી રાઈ', bn:'হলুদ সরিষা', ta:'மஞ்சள் கடுகு', te:'పసుపు ఆవాలు', kn:'ಹಳದಿ ಸಾಸಿವೆ', ml:'മഞ്ഞ കടുക്', or:'ହଳଦିଆ ସୋରିଷ', as:'হালধীয়া সৰিয়হ', ur:'پیلی سرسوں'},
+  v_l4_variety:{en:'Onion (Nashik Red)', hi:'प्याज़ (नासिक रेड)', pa:'ਪਿਆਜ਼ (ਨਾਸਿਕ ਰੈੱਡ)', mr:'कांदा (नाशिक रेड)', gu:'ડુંગળી (નાસિક રેડ)', bn:'পেঁয়াজ (নাসিক রেড)', ta:'வெங்காயம் (நாசிக் ரெட்)', te:'ఉల్లిపాయ (నాసిక్ రెడ్)', kn:'ಈರುಳ್ಳಿ (ನಾಸಿಕ್ ರೆಡ್)', ml:'ഉള്ളി (നാസിക് റെഡ്)', or:'ପିଆଜ (ନାସିକ ରେଡ)', as:'পিঁয়াজ (নাশিক ৰেড)', ur:'پیاز (ناسک ریڈ)'},
+  v_l4_code:{en:'Nashik Red', hi:'नासिक रेड', pa:'ਨਾਸਿਕ ਰੈੱਡ', mr:'नाशिक रेड', gu:'નાસિક રેડ', bn:'নাসিক রেড', ta:'நாசிக் ரெட்', te:'నాసిక్ రెడ్', kn:'ನಾಸಿಕ್ ರೆಡ್', ml:'നാസിക് റെഡ്', or:'ନାସିକ ରେଡ', as:'নাশিক ৰেড', ur:'ناسک ریڈ'},
+  greet_heading_tpl:{en:'Hello {name}! Get the right price for your crop', hi:'राम राम {name} भाई! अपनी फसल का सही दाम पाएं', pa:'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ {name} ਜੀ! ਆਪਣੀ ਫਸਲ ਦਾ ਸਹੀ ਭਾਅ ਲਓ', mr:'नमस्कार {name}! तुमच्या पिकाची योग्य किंमत मिळवा', gu:'નમસ્તે {name}! તમારા પાકની યોગ્ય કિંમત મેળવો', bn:'নমস্কার {name}! আপনার ফসলের সঠিক দাম পান', ta:'வணக்கம் {name}! உங்கள் பயிருக்கு சரியான விலையைப் பெறுங்கள்', te:'నమస్కారం {name}! మీ పంటకు సరైన ధర పొందండి', kn:'ನಮಸ್ಕಾರ {name}! ನಿಮ್ಮ ಬೆಳೆಗೆ ಸರಿಯಾದ ಬೆಲೆ ಪಡೆಯಿರಿ', ml:'നമസ്കാരം {name}! നിങ്ങളുടെ വിളയ്ക്ക് ശരിയായ വില നേടൂ', or:'ନମସ୍କାର {name}! ଆପଣଙ୍କ ଫସଲର ସଠିକ୍ ମୂଲ୍ୟ ପାଆନ୍ତୁ', as:'নমস্কাৰ {name}! আপোনাৰ শস্যৰ সঠিক দাম লাভ কৰক', ur:'السلام علیکم {name}! اپنی فصل کی صحیح قیمت حاصل کریں'},
+  buyer_greet_heading_tpl:{en:'Hello {name}! Buy directly from farmers', hi:'नमस्ते {name}! सीधे किसानों से खरीदें', pa:'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ {name}! ਸਿੱਧੇ ਕਿਸਾਨਾਂ ਤੋਂ ਖਰੀਦੋ', mr:'नमस्कार {name}! थेट शेतकऱ्यांकडून खरेदी करा', gu:'નમસ્તે {name}! સીધા ખેડૂતો પાસેથી ખરીદો', bn:'নমস্কার {name}! সরাসরি কৃষকদের কাছ থেকে কিনুন', ta:'வணக்கம் {name}! நேரடியாக விவசாயிகளிடமிருந்து வாங்குங்கள்', te:'నమస్కారం {name}! నేరుగా రైతుల నుండి కొనుగోలు చేయండి', kn:'ನಮಸ್ಕಾರ {name}! ನೇರವಾಗಿ ರೈತರಿಂದ ಖರೀದಿಸಿ', ml:'നമസ്കാരം {name}! നേരിട്ട് കർഷകരിൽ നിന്ന് വാങ്ങുക', or:'ନମସ୍କାର {name}! ସିଧାସଳଖ କୃଷକଙ୍କଠାରୁ କିଣନ୍ତୁ', as:'নমস্কাৰ {name}! পোনপটীয়াকৈ কৃষকৰ পৰা কিনক', ur:'السلام علیکم {name}! براہ راست کسانوں سے خریدیں'},
+  default_farmer_name:{en:'Ramesh', hi:'रमेश', pa:'ਰਮੇਸ਼', mr:'रमेश', gu:'રમેશ', bn:'রমেশ', ta:'ரமேஷ்', te:'రమేష్', kn:'ರಮೇಶ್', ml:'രമേശ്', or:'ରମେଶ', as:'ৰমেশ', ur:'رمیش'}
+};
+
+function t(key){
+  const row = translations[key];
+  if(!row) return key;
+  return row[currentLang] || row['en'] || key;
+}
+
+let currentLang='hi';
+function setLang(lang){
+  currentLang=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(translations[key] && translations[key][lang]) el.innerHTML=translations[key][lang];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-placeholder');
+    el.placeholder = t(key);
+  });
+  const headerSel = document.getElementById('lang-select');
+  const loginSel = document.getElementById('login-lang-select');
+  if(headerSel) headerSel.value = lang;
+  if(loginSel) loginSel.value = lang;
+  renderBuyerMarketplace();
+  renderPrices();
+  renderFarmerDashboard();
+  renderOffers();
+  renderAccount();
+}
+
+function cropLabel(crop){
+  const key='crop_'+crop.toLowerCase();
+  return (translations[key] && translations[key][currentLang]) || (translations[key] && translations[key]['en']) || crop;
+}
+
+function packagingLabel(pkg){
+  const map = {loose:'pack_loose', jute:'pack_jute', pp_bag:'pack_pp', crate:'pack_crate'};
+  const key = map[pkg];
+  return key ? t(key) : pkg;
+}
+
+// Resolve a translated label from a translation key, falling back to raw text
+// (used for listings/orders that don't have a matching i18n key, e.g. user-added crops)
+function resolveI18n(key, fallback){
+  return (key && translations[key]) ? t(key) : fallback;
+}
+function varietyLabel(l){
+  if(l.varietyKey && translations[l.varietyKey]) return t(l.varietyKey);
+  if(l.crop && l.grade) return cropLabel(l.crop) + ' (Grade ' + l.grade + ')';
+  return l.variety;
+}
+function varietyCodeLabel(l){
+  if(l.codeKey && translations[l.codeKey]) return t(l.codeKey);
+  if(l.crop) return cropLabel(l.crop);
+  return l.varietyCode;
+}
+function orderCropLabel(o){
+  if(o.varietyKey || o.varietyText) return resolveI18n(o.varietyKey, o.varietyText);
+  return cropLabel(o.cropKey);
+}
+function cropCountLabel(n){
+  if(currentLang==='en') return n===1 ? 'crop' : 'crops';
+  return t('label_crops');
+}
+
+const basePrices = {Wheat:2275, Rice:2183, Tomato:1400, Onion:1800, Potato:1200, Cotton:6800, Mustard:5650, Soybean:4300, Chana:5335, Arhar:7000};
+const gradeMult = {A:1.12, B:1.0, C:0.85};
+const trends = {Wheat:'up', Rice:'up', Tomato:'down', Onion:'up', Potato:'down', Cotton:'up', Mustard:'up', Soybean:'down', Chana:'up', Arhar:'up'};
+const cropCategory = {Wheat:'grain', Rice:'grain', Mustard:'oilseed', Soybean:'oilseed', Chana:'pulse', Arhar:'pulse', Tomato:'vegetable', Onion:'vegetable', Potato:'vegetable', Cotton:'other'};
+const cropIcon = {Wheat:'🌾', Rice:'🍚', Mustard:'🌻', Soybean:'🌱', Chana:'🟤', Arhar:'🟠', Tomato:'🍅', Onion:'🧅', Potato:'🥔', Cotton:'☁️'};
+
+const buyers = [
+  {name:'AgroFresh Traders', loc:'Patiala, Punjab', crops:['Wheat','Rice','Cotton','Mustard'], payment:'Bank Transfer'},
+  {name:'GreenBasket Wholesale', loc:'Ludhiana, Punjab', crops:['Tomato','Onion','Potato'], payment:'UPI'},
+  {name:'National Foods Ltd.', loc:'Delhi NCR', crops:['Wheat','Rice','Chana'], payment:'Bank Transfer'},
+  {name:'FarmFresh Exports', loc:'Amritsar, Punjab', crops:['Cotton','Onion','Soybean'], payment:'Bank Transfer / UPI'}
+];
+
+// Mock company identity for the demo buyer login
+const buyerIdentity = 'AgroFresh Traders';
+
+// The farmer's own posted crop listings, each with buyer offers received
+let farmerListings = [
+  {
+    id:'L1', crop:'Wheat', variety:'शरबती गेहूं (कनक)', varietyEn:'Sharbati Wheat (Kanak)',
+    varietyKey:'v_l1_variety', codeKey:'v_l1_code',
+    varietyCode:'C-306 शरबती', grade:'A', loc:'सीहोर / हरदा, मध्य प्रदेश',
+    qty:120, mandiPrice:2540, icon:'🌾', color:'#fdf1d6',
+    offers:[
+      {buyer:'AgroFresh Traders', price:2880, qty:120, payment:'Bank Transfer', status:'pending'},
+      {buyer:'National Foods Ltd.', price:2820, qty:110, payment:'UPI', status:'pending'},
+      {buyer:'GreenBasket Wholesale', price:2760, qty:120, payment:'Cash on Pickup', status:'pending'}
+    ]
+  },
+  {
+    id:'L2', crop:'Rice', variety:'बासमती 1121 धान', varietyEn:'Basmati 1121 Paddy',
+    varietyKey:'v_l2_variety', codeKey:'v_l2_code',
+    varietyCode:'1121 सुपर फाइन', grade:'A', loc:'करनाल, हरियाणा',
+    qty:250, mandiPrice:3500, icon:'🍚', color:'#eef3e3',
+    offers:[
+      {buyer:'National Foods Ltd.', price:3980, qty:250, payment:'Bank Transfer', status:'pending'}
+    ]
+  },
+  {
+    id:'L3', crop:'Mustard', variety:'सरसों (पीली)', varietyEn:'Mustard (Yellow)',
+    varietyKey:'v_l3_variety', codeKey:'v_l3_code',
+    varietyCode:'पीली सरसों', grade:'B', loc:'बठिंडा, पंजाब',
+    qty:40, mandiPrice:5650, icon:'🌻', color:'#fff6d8',
+    offers:[]
+  },
+  {
+    id:'L4', crop:'Onion', variety:'प्याज़ (नासिक रेड)', varietyEn:'Onion (Nashik Red)',
+    varietyKey:'v_l4_variety', codeKey:'v_l4_code',
+    varietyCode:'नासिक रेड', grade:'A', loc:'बठिंडा, पंजाब',
+    qty:60, mandiPrice:1800, icon:'🧅', color:'#fbe4e4',
+    offers:[
+      {buyer:'GreenBasket Wholesale', price:1950, qty:60, payment:'UPI', status:'accepted'}
+    ]
+  }
+];
+
+let orders = [
+  {id:'FL-1042', cropKey:'Wheat', buyer:'AgroFresh Traders', amount:91000, payment:'Paid', transport:'Delivered'},
+  {id:'FL-1051', cropKey:'Onion', buyer:'GreenBasket Wholesale', amount:45000, payment:'Pending', transport:'In Transit'},
+  {id:'FL-1058', cropKey:'Cotton', buyer:'FarmFresh Exports', amount:408000, payment:'Pending', transport:'Scheduled'}
+];
+
+let activeCategory = 'all';
+let searchTerm = '';
+let buyerActiveCategory = 'all';
+let buyerSearchTerm = '';
+
+/* ---------- Navigation ---------- */
+function activateTab(id){
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.t===id));
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', s.id===id));
+  if(id==='account') renderAccount();
+  if(id==='farmer') renderFarmerDashboard();
+  if(id==='offers') renderOffers();
+  if(id==='buyer') renderBuyerMarketplace();
+  if(id==='prices') renderPrices();
+  updateRoleToggle(id);
+}
+function updateRoleToggle(id){
+  const buyerMode = id==='buyer';
+  document.getElementById('role-farmer').classList.toggle('active', !buyerMode);
+  document.getElementById('role-buyer').classList.toggle('active', buyerMode);
+}
+function switchRole(role){
+  activateTab(role==='buyer' ? 'buyer' : 'farmer');
+}
+document.querySelectorAll('nav button').forEach(btn=>{
+  btn.addEventListener('click', ()=> activateTab(btn.dataset.t));
+});
+
+/* ---------- Toast ---------- */
+function showToast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=>el.classList.remove('show'), 3500);
+}
+
+/* ---------- Farmer Dashboard ---------- */
+function farmerFirstName(){
+  const bank = JSON.parse(localStorage.getItem('faslynk_bank')||'null');
+  if(bank && bank.name) return bank.name.split(' ')[0];
+  return t('default_farmer_name');
+}
+
+function renderGreeting(){
+  const name = farmerFirstName();
+  const h2 = document.getElementById('greet-heading');
+  if(!h2) return;
+  h2.textContent = t('greet_heading_tpl').replace('{name}', name);
+}
+
+function selectCategory(cat){
+  activeCategory = cat;
+  document.querySelectorAll('#farmer .cat-pill').forEach(p=>p.classList.toggle('active', p.dataset.cat===cat));
+  renderFarmerDashboard();
+}
+function onSearchInput(v){
+  searchTerm = (v||'').trim().toLowerCase();
+  renderFarmerDashboard();
+}
+function filteredListings(){
+  return farmerListings.filter(l=>{
+    const catOk = activeCategory==='all' || cropCategory[l.crop]===activeCategory;
+    const s = searchTerm;
+    const searchOk = !s || varietyLabel(l).toLowerCase().includes(s) || l.loc.toLowerCase().includes(s) || l.crop.toLowerCase().includes(s);
+    return catOk && searchOk;
+  });
+}
+function bestOffer(listing){
+  const active = listing.offers.filter(o=>o.status!=='rejected');
+  if(!active.length) return null;
+  return active.reduce((a,b)=> (b.price>a.price ? b : a));
+}
+function pendingOffersCount(){
+  return farmerListings.reduce((sum,l)=>sum+l.offers.filter(o=>o.status==='pending').length,0);
+}
+function updateOffersBadge(){
+  const n = pendingOffersCount();
+  const el = document.getElementById('offers-badge');
+  if(!el) return;
+  if(n>0){ el.textContent=n; el.style.display='flex'; el.style.alignItems='center'; el.style.justifyContent='center'; }
+  else{ el.style.display='none'; }
+}
+
+function renderFarmerDashboard(){
+  renderGreeting();
+  const wrap = document.getElementById('crop-list');
+  if(!wrap) return;
+  const items = filteredListings();
+  document.getElementById('crop-count').textContent = items.length + ' ' + cropCountLabel(items.length);
+  wrap.innerHTML='';
+  if(!items.length){
+    wrap.innerHTML = `<div class="card" style="text-align:center;color:var(--muted);">${currentLang==='hi'?'इस श्रेणी में कोई फसल सूचीबद्ध नहीं है।':'No crops listed in this category.'}</div>`;
+    updateOffersBadge();
+    return;
+  }
+  items.forEach(l=>{
+    const best = bestOffer(l);
+    const pendingCount = l.offers.filter(o=>o.status==='pending').length;
+    const accepted = l.offers.find(o=>o.status==='accepted');
+    let offerVal, banner, footBtn;
+    if(accepted){
+      offerVal = `₹${accepted.price}`;
+      banner = `<div class="profit-banner deal">✅ ${currentLang==='hi'?'सौदा स्वीकृत — उठान व भुगतान की प्रतीक्षा':'Deal accepted — awaiting pickup & payment'}</div>`;
+      footBtn = `<span class="badge badgeA">${t('status_accepted')}</span>`;
+    } else if(best){
+      const diff = best.price - l.mandiPrice;
+      offerVal = `₹${best.price}`;
+      banner = diff>0
+        ? `<div class="profit-banner">💰 +₹${diff}/Qtl ${currentLang==='hi'?'ज्यादा मुनाफा (मंडी से अधिक)':'more profit (above mandi)'}</div>`
+        : `<div class="profit-banner neutral">${currentLang==='hi'?'ऑफर मंडी भाव के आसपास है।':'Offer is close to mandi price.'}</div>`;
+      footBtn = `<button class="pill-btn" onclick="goToOffers('${l.id}')">${t('btn_view_offers')} (${pendingCount}) 👉</button>`;
+    } else {
+      offerVal = '—';
+      banner = `<div class="profit-banner neutral">${currentLang==='hi'?'अभी कोई ऑफर प्राप्त नहीं हुआ — जल्द सूचित करेंगे।':'No offers received yet — we will notify you soon.'}</div>`;
+      footBtn = `<button class="pill-btn" disabled style="opacity:.5;cursor:default;">${t('btn_view_offers')} (0)</button>`;
+    }
+    const thumb = l.photo
+      ? `<img src="${l.photo}" alt="${varietyCodeLabel(l)}" style="width:60px;height:60px;border-radius:10px;object-fit:cover;flex-shrink:0;">`
+      : `<div class="crop-thumb" style="background:${l.color}">${l.icon}</div>`;
+    const organicBadge = l.organic==='yes'
+      ? `<span class="badge badgeA">${currentLang==='hi'?'🌿 जैविक':'🌿 Organic'}</span>`
+      : '';
+    const extraDetail = [
+      l.moisture ? (currentLang==='hi'?`नमी: ${l.moisture}%`:`Moisture: ${l.moisture}%`) : null,
+      l.harvestDate ? (currentLang==='hi'?`कटाई: ${l.harvestDate}`:`Harvested: ${l.harvestDate}`) : null,
+      l.packaging ? (currentLang==='hi'?`पैकेजिंग: ${packagingLabel(l.packaging)}`:`Packaging: ${packagingLabel(l.packaging)}`) : null
+    ].filter(Boolean).join(' • ');
+    wrap.innerHTML += `
+    <div class="crop-card">
+      <div class="crop-head">
+        ${thumb}
+        <div style="flex:1;">
+          <div class="crop-name-row"><b>${varietyLabel(l)}</b><span class="badge badge${l.grade}">Grade ${l.grade}</span>${organicBadge}</div>
+          <div class="crop-sub">${varietyCodeLabel(l)} • 📍 ${l.loc}</div>
+        </div>
+      </div>
+      <div class="crop-stats">
+        <div><div class="label">${t('label_qty')}</div><div class="value">${l.qty} Qtl</div></div>
+        <div><div class="label">${t('label_mandi')}</div><div class="value mandi-val">₹${l.mandiPrice}</div></div>
+        <div><div class="label">${t('label_offer')}</div><div class="value offer-val">${offerVal}</div></div>
+      </div>
+      ${banner}
+      <div class="crop-foot">
+        <button class="link-btn" onclick="toggleDetail('${l.id}')">${t('btn_details')}</button>
+        ${footBtn}
+      </div>
+      <div class="crop-detail" id="detail-${l.id}">
+        ${currentLang==='hi'?'फसल':'Crop'}: ${cropLabel(l.crop)} • ${currentLang==='hi'?'कुल मात्रा':'Total qty'}: ${l.qty} Qtl • ${currentLang==='hi'?'मंडी भाव':'Mandi price'}: ₹${l.mandiPrice}/Qtl • ${currentLang==='hi'?'प्राप्त ऑफर':'Offers received'}: ${l.offers.length}${extraDetail ? ' • '+extraDetail : ''}
+      </div>
+    </div>`;
+  });
+  updateOffersBadge();
+}
+function toggleDetail(id){
+  const el = document.getElementById('detail-'+id);
+  if(el) el.classList.toggle('show');
+}
+function goToOffers(id){
+  activateTab('offers');
+  setTimeout(()=>{
+    const el = document.getElementById('offer-group-'+id);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 60);
+}
+
+/* ---------- Buyer Offers Inbox ---------- */
+function renderOffers(){
+  const wrap = document.getElementById('offers-list');
+  if(!wrap) return;
+  wrap.innerHTML='';
+  const withOffers = farmerListings.filter(l=>l.offers.length>0);
+  if(!withOffers.length){
+    wrap.innerHTML = `<div style="text-align:center;color:var(--muted);padding:20px 0;">${t('offers_none')}</div>`;
+    updateOffersBadge();
+    return;
+  }
+  withOffers.forEach(l=>{
+    let rows = '';
+    l.offers.forEach((o, idx)=>{
+      const total = o.price*o.qty;
+      const statusLabel = o.status==='pending' ? t('status_pending') : o.status==='accepted' ? t('status_accepted') : t('status_rejected');
+      const statusClass = o.status==='pending' ? 'badgeB' : o.status==='accepted' ? 'badgeA' : 'badgeC';
+      let actions;
+      if(o.status==='pending'){
+        actions = `<div class="offer-actions">
+          <button class="accept-btn" onclick="acceptOffer('${l.id}',${idx})">${t('accept_btn')}</button>
+          <button class="reject-btn" onclick="rejectOffer('${l.id}',${idx})">${t('reject_btn')}</button>
+        </div>`;
+      } else {
+        actions = `<span class="badge ${statusClass}">${statusLabel}</span>`;
+      }
+      rows += `<div class="offer-row">
+        <div class="buyer-info"><b>${o.buyer}</b><span>₹${o.price}/Qtl • ${o.qty} Qtl • ${t('total_label')}: ₹${total.toLocaleString()} • ${o.payment}</span></div>
+        ${actions}
+      </div>`;
+    });
+    wrap.innerHTML += `<div class="offer-group" id="offer-group-${l.id}">
+      <h4>${l.icon} ${varietyLabel(l)} <span class="badge badge${l.grade}">Grade ${l.grade}</span></h4>
+      ${rows}
+    </div>`;
+  });
+  updateOffersBadge();
+}
+function acceptOffer(lid, idx){
+  const listing = farmerListings.find(l=>l.id===lid);
+  if(!listing) return;
+  listing.offers.forEach((o,i)=>{
+    if(i===idx) o.status='accepted';
+    else if(o.status==='pending') o.status='rejected';
+  });
+  const accepted = listing.offers[idx];
+  orders.unshift({
+    id: 'FL-'+Math.floor(1000+Math.random()*9000),
+    cropKey: listing.crop,
+    varietyKey: listing.varietyKey,
+    varietyText: listing.variety,
+    buyer: accepted.buyer,
+    amount: accepted.price*accepted.qty,
+    payment:'Pending',
+    transport:'Scheduled'
+  });
+  renderOffers();
+  renderFarmerDashboard();
+  renderAccount();
+  showToast(currentLang==='hi' ? `✅ ऑफर स्वीकार की गई — ${accepted.buyer} से सौदा तय!` : `✅ Offer accepted — deal confirmed with ${accepted.buyer}!`);
+}
+function rejectOffer(lid, idx){
+  const listing = farmerListings.find(l=>l.id===lid);
+  if(!listing) return;
+  listing.offers[idx].status='rejected';
+  renderOffers();
+  renderFarmerDashboard();
+}
+
+/* ---------- Add New Crop Modal ---------- */
+let pendingCropPhoto = null;
+function previewCropPhoto(evt){
+  const file = evt.target.files && evt.target.files[0];
+  const preview = document.getElementById('f-photo-preview');
+  if(!file){ pendingCropPhoto = null; preview.classList.remove('show'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingCropPhoto = e.target.result;
+    preview.src = pendingCropPhoto;
+    preview.classList.add('show');
+  };
+  reader.readAsDataURL(file);
+}
+function openAddModal(){
+  document.getElementById('add-modal').classList.add('show');
+}
+function closeAddModal(){
+  document.getElementById('add-modal').classList.remove('show');
+  document.getElementById('f-result').classList.remove('show');
+}
+function confirmAddListing(){
+  const crop = document.getElementById('f-crop').value;
+  const qty = parseFloat(document.getElementById('f-qty').value)||1;
+  const grade = document.getElementById('f-grade').value;
+  const loc = document.getElementById('f-loc').value || (currentLang==='hi'?'अज्ञात स्थान':'Unknown location');
+  const moisture = document.getElementById('f-moisture').value;
+  const harvestDate = document.getElementById('f-harvest').value;
+  const packaging = document.getElementById('f-packaging').value;
+  const organic = document.getElementById('f-organic').value;
+  const photo = pendingCropPhoto;
+  const mandiPrice = basePrices[crop];
+  const newListing = {
+    id: 'L'+Date.now(),
+    crop,
+    variety: cropLabel(crop) + ' (Grade ' + grade + ')',
+    varietyEn: crop + ' (Grade ' + grade + ')',
+    varietyCode: cropLabel(crop),
+    grade, loc, qty, mandiPrice,
+    moisture, harvestDate, packaging, organic, photo,
+    icon: cropIcon[crop] || '🌱',
+    color: '#eef3e3',
+    offers: []
+  };
+  farmerListings.unshift(newListing);
+  closeAddModal();
+  // reset modal fields for next use
+  pendingCropPhoto = null;
+  const photoInput = document.getElementById('f-photo');
+  const photoPrev = document.getElementById('f-photo-preview');
+  if(photoInput) photoInput.value = '';
+  if(photoPrev) photoPrev.classList.remove('show');
+  activateTab('farmer');
+  showToast(currentLang==='hi'
+    ? 'फसल सफलतापूर्वक सूचीबद्ध हुई! जल्द ही खरीदारों के ऑफर आने लगेंगे।'
+    : 'Crop listed successfully! Buyers will start sending offers soon.');
+}
+
+function suggestPrice(){
+  const crop = document.getElementById('f-crop').value;
+  const qty = parseFloat(document.getElementById('f-qty').value)||1;
+  const grade = document.getElementById('f-grade').value;
+  const loc = document.getElementById('f-loc').value;
+  const price = Math.round(basePrices[crop]*gradeMult[grade]);
+  const low = Math.round(price*0.95), high = Math.round(price*1.05);
+  const matched = buyers.filter(b=>b.crops.includes(crop));
+  const isHi = currentLang==='hi';
+  let html = `<div>${isHi?'अनुमानित उचित मूल्य':'Suggested fair price for'} <b>${cropLabel(crop)}</b> (${isHi?'ग्रेड':'Grade'} ${grade}):</div>
+  <div class="price">₹${low} – ₹${high} / ${isHi?'क्विंटल':'quintal'}</div>
+  <div style="margin-top:4px;color:var(--muted);font-size:.85rem;">${isHi?`${qty} क्विंटल के लिए अनुमानित कुल राशि`:`Estimated total for ${qty} quintals`}: ₹${(low*qty).toLocaleString()} – ₹${(high*qty).toLocaleString()}</div>
+  <div style="margin-top:12px;font-weight:700;">${isHi?`${loc} के पास संभावित खरीदार`:`Matched Buyers near ${loc}`}:</div>`;
+  if(matched.length){
+    matched.forEach(b=>{
+      html += `<div class="listing"><div class="info"><b>${b.name}</b><span>${b.loc} · ${isHi?'भुगतान':'Pays via'} ${b.payment}</span></div><span class="badge badgeA">${isHi?'रुचि रखते हैं':'Interested'}</span></div>`;
+    });
+  } else {
+    html += `<div style="color:var(--muted);">${isHi?'अभी कोई सीधा मिलान नहीं — सूची पूरे नेटवर्क में भेजी जाएगी।':'No direct buyer match yet — listing will be broadcast to the network.'}</div>`;
+  }
+  const box = document.getElementById('f-result');
+  box.innerHTML = html;
+  box.classList.add('show');
+}
+
+function suggestVehicle(qty){
+  if(qty<=10) return currentLang==='hi' ? 'मिनी ट्रैक्टर ट्रॉली' : 'Mini Tractor Trolley';
+  if(qty<=30) return currentLang==='hi' ? 'ट्रैक्टर ट्रॉली' : 'Tractor Trolley';
+  return currentLang==='hi' ? 'मिनी ट्रक / ट्रक' : 'Mini Truck / Truck';
+}
+function estimateTransportCost(qty){
+  return Math.round(300 + qty*45);
+}
+
+function saveBankDetails(){
+  const isHi = currentLang==='hi';
+  const data = {
+    name: document.getElementById('bank-name').value.trim(),
+    bankname: document.getElementById('bank-bankname').value.trim(),
+    acc: document.getElementById('bank-acc').value.trim(),
+    ifsc: document.getElementById('bank-ifsc').value.trim(),
+    upi: document.getElementById('bank-upi').value.trim()
+  };
+  if(!data.name || !data.acc || !data.ifsc || !data.bankname){
+    document.getElementById('bank-result').innerHTML = `<span style="color:#c62828;">${isHi?'कृपया खाताधारक का नाम, बैंक का नाम, खाता संख्या और IFSC कोड भरें।':'Please fill account holder name, bank name, account number and IFSC code.'}</span>`;
+    document.getElementById('bank-result').classList.add('show');
+    return;
+  }
+  localStorage.setItem('faslynk_bank', JSON.stringify(data));
+  const masked = data.acc.length>4 ? '*'.repeat(data.acc.length-4)+data.acc.slice(-4) : data.acc;
+  document.getElementById('bank-result').innerHTML = isHi
+    ? `✅ बैंक विवरण सहेजा गया। भुगतान <b>${data.bankname}</b>, खाता <b>${masked}</b>${data.upi?' या UPI <b>'+data.upi+'</b>':''} में जाएगा।`
+    : `✅ Bank details saved. Payments will go to <b>${data.bankname}</b>, a/c <b>${masked}</b>${data.upi?' or UPI <b>'+data.upi+'</b>':''}.`;
+  document.getElementById('bank-result').classList.add('show');
+  renderFarmerDashboard();
+}
+
+function saveTransportDetails(){
+  const isHi = currentLang==='hi';
+  const need = document.getElementById('transport-need').value;
+  const loc = document.getElementById('transport-loc').value.trim();
+  const date = document.getElementById('transport-date').value;
+  if(need==='yes' && !loc){
+    document.getElementById('transport-result').innerHTML = `<span style="color:#c62828;">${isHi?'कृपया उठान गांव/पता दर्ज करें।':'Please enter your pickup village/address.'}</span>`;
+    document.getElementById('transport-result').classList.add('show');
+    return;
+  }
+  localStorage.setItem('faslynk_transport', JSON.stringify({need, loc, date}));
+  const qty = parseFloat(document.getElementById('f-qty').value)||10;
+  const vehicle = suggestVehicle(qty);
+  const cost = estimateTransportCost(qty);
+  let html = isHi ? '✅ परिवहन प्राथमिकता सहेजी गई।' : '✅ Transport preference saved.';
+  if(need==='yes'){
+    html += isHi
+      ? ` ${qty} क्विंटल के लिए सुझाया वाहन: <b>${vehicle}</b>, अनुमानित लागत ₹${cost.toLocaleString()}${date?' • उठान तिथि '+date:''}।`
+      : ` For ${qty} quintals, suggested vehicle: <b>${vehicle}</b>, estimated cost ₹${cost.toLocaleString()}${date?' for pickup on '+date:''}.`;
+  } else {
+    html += isHi ? ' आपने स्वयं पहुंचाने का विकल्प चुना है।' : " You've chosen to deliver produce yourself.";
+  }
+  document.getElementById('transport-result').innerHTML = html;
+  document.getElementById('transport-result').classList.add('show');
+}
+
+/* ---------- Buyer Marketplace & Price Insights ---------- */
+function selectBuyerCategory(cat){
+  buyerActiveCategory = cat;
+  document.querySelectorAll('#buyer .cat-pill').forEach(p=>p.classList.toggle('active', p.dataset.cat===cat));
+  renderBuyerMarketplace();
+}
+function onBuyerSearchInput(v){
+  buyerSearchTerm = (v||'').trim().toLowerCase();
+  renderBuyerMarketplace();
+}
+function filteredBuyerListings(){
+  return farmerListings.filter(l=>{
+    const catOk = buyerActiveCategory==='all' || cropCategory[l.crop]===buyerActiveCategory;
+    const s = buyerSearchTerm;
+    const searchOk = !s || varietyLabel(l).toLowerCase().includes(s) || l.loc.toLowerCase().includes(s) || l.crop.toLowerCase().includes(s);
+    return catOk && searchOk;
+  });
+}
+function renderBuyerMarketplace(){
+  const wrap = document.getElementById('buyer-crop-list');
+  if(!wrap) return;
+  const isHi = currentLang==='hi';
+  const bh = document.getElementById('buyer-greet-heading');
+  if(bh) bh.textContent = t('buyer_greet_heading_tpl').replace('{name}', buyerIdentity);
+  const items = filteredBuyerListings();
+  const countEl = document.getElementById('buyer-crop-count');
+  if(countEl) countEl.textContent = items.length + ' ' + cropCountLabel(items.length);
+  wrap.innerHTML='';
+  if(!items.length){
+    wrap.innerHTML = `<div class="card" style="text-align:center;color:var(--muted);">${isHi?'इस श्रेणी में कोई उपज उपलब्ध नहीं है।':'No produce available in this category.'}</div>`;
+    renderBuyerStats();
+    return;
+  }
+  items.forEach(l=>{
+    const mine = l.offers.find(o=>o.buyer===buyerIdentity);
+    let actionHtml;
+    if(mine){
+      const statusLabel = mine.status==='pending'?t('status_pending'):mine.status==='accepted'?t('status_accepted'):t('status_rejected');
+      const cls = mine.status==='pending'?'badgeB':mine.status==='accepted'?'badgeA':'badgeC';
+      actionHtml = `<div style="margin-top:10px;"><span class="badge ${cls}">${isHi?'आपका ऑफर':'Your offer'}: ₹${mine.price}/Qtl — ${statusLabel}</span></div>`;
+    } else {
+      actionHtml = `<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center;">
+        <input type="number" id="offer-input-${l.id}" placeholder="${t('ph_offer_input')}" style="flex:1;min-width:140px;" min="1">
+        <button class="pill-btn" onclick="sendBuyerOffer('${l.id}')">${isHi?'ऑफर भेजें':'Send Offer'} 📤</button>
+      </div>`;
+    }
+    const thumb = l.photo
+      ? `<img src="${l.photo}" alt="${varietyCodeLabel(l)}" style="width:60px;height:60px;border-radius:10px;object-fit:cover;flex-shrink:0;">`
+      : `<div class="crop-thumb" style="background:${l.color}">${l.icon}</div>`;
+    const organicBadge = l.organic==='yes'
+      ? `<span class="badge badgeA">${isHi?'🌿 जैविक':'🌿 Organic'}</span>`
+      : '';
+    const qualityBits = [
+      l.moisture ? (isHi?`नमी ${l.moisture}%`:`Moisture ${l.moisture}%`) : null,
+      l.packaging ? packagingLabel(l.packaging) : null,
+      l.harvestDate ? (isHi?`कटाई ${l.harvestDate}`:`Harvested ${l.harvestDate}`) : null
+    ].filter(Boolean).join(' • ');
+    wrap.innerHTML += `
+    <div class="crop-card">
+      <div class="crop-head">
+        ${thumb}
+        <div style="flex:1;">
+          <div class="crop-name-row"><b>${varietyLabel(l)}</b><span class="badge badge${l.grade}">Grade ${l.grade}</span>${organicBadge}</div>
+          <div class="crop-sub">${varietyCodeLabel(l)} • 📍 ${l.loc}</div>
+          ${qualityBits ? `<div class="crop-sub">${qualityBits}</div>` : ''}
+        </div>
+      </div>
+      <div class="crop-stats">
+        <div><div class="label">${t('label_qty')}</div><div class="value">${l.qty} Qtl</div></div>
+        <div><div class="label">${t('label_mandi')}</div><div class="value">₹${l.mandiPrice}</div></div>
+        <div><div class="label">${isHi?'कुल ऑफर':'Total offers'}</div><div class="value">${l.offers.length}</div></div>
+      </div>
+      ${actionHtml}
+    </div>`;
+  });
+  renderBuyerStats();
+}
+function sendBuyerOffer(listingId){
+  const isHi = currentLang==='hi';
+  const listing = farmerListings.find(l=>l.id===listingId);
+  if(!listing) return;
+  const input = document.getElementById('offer-input-'+listingId);
+  const price = parseFloat(input.value);
+  if(!price || price<=0){
+    showToast(isHi?'कृपया सही ऑफर मूल्य डालें।':'Please enter a valid offer price.');
+    return;
+  }
+  listing.offers.push({buyer:buyerIdentity, price, qty:listing.qty, payment:'Bank Transfer', status:'pending'});
+  renderBuyerMarketplace();
+  renderFarmerDashboard();
+  renderOffers();
+  showToast(isHi ? `✅ ऑफर भेजा गया: ₹${price}/Qtl` : `✅ Offer sent: ₹${price}/quintal`);
+}
+function renderBuyerStats(){
+  const sent = farmerListings.reduce((s,l)=>s+l.offers.filter(o=>o.buyer===buyerIdentity).length,0);
+  const accepted = farmerListings.reduce((s,l)=>s+l.offers.filter(o=>o.buyer===buyerIdentity && o.status==='accepted').length,0);
+  const spend = farmerListings.reduce((s,l)=>{
+    const acc = l.offers.find(o=>o.buyer===buyerIdentity && o.status==='accepted');
+    return s + (acc ? acc.price*acc.qty : 0);
+  },0);
+  const sentEl=document.getElementById('buyer-sent'); if(sentEl) sentEl.textContent=sent;
+  const accEl=document.getElementById('buyer-accepted'); if(accEl) accEl.textContent=accepted;
+  const spendEl=document.getElementById('buyer-spend'); if(spendEl) spendEl.textContent='₹'+spend.toLocaleString();
+
+  const listEl = document.getElementById('buyer-sent-offers');
+  if(!listEl) return;
+  const isHi = currentLang==='hi';
+  const mine = [];
+  farmerListings.forEach(l=>{
+    l.offers.forEach(o=>{ if(o.buyer===buyerIdentity) mine.push({status:o.status, price:o.price, qty:o.qty, cropName:varietyLabel(l), icon:l.icon, grade:l.grade}); });
+  });
+  if(!mine.length){
+    listEl.innerHTML = `<div style="color:var(--muted);text-align:center;padding:14px 0;">${isHi?'आपने अभी तक कोई ऑफर नहीं भेजा है।':"You haven't sent any offers yet."}</div>`;
+    return;
+  }
+  listEl.innerHTML = mine.map(o=>{
+    const statusLabel = o.status==='pending'?t('status_pending'):o.status==='accepted'?t('status_accepted'):t('status_rejected');
+    const cls = o.status==='pending'?'badgeB':o.status==='accepted'?'badgeA':'badgeC';
+    return `<div class="offer-row"><div class="buyer-info"><b>${o.icon} ${o.cropName}</b><span>₹${o.price}/Qtl • ${o.qty} Qtl • Grade ${o.grade}</span></div><span class="badge ${cls}">${statusLabel}</span></div>`;
+  }).join('');
+}
+
+function renderPrices(){
+  const tbody = document.getElementById('price-table');
+  const bars = document.getElementById('price-bars');
+  if(!tbody || !bars) return;
+  const max = Math.max(...Object.values(basePrices));
+  tbody.innerHTML=''; bars.innerHTML='';
+  Object.keys(basePrices).forEach(crop=>{
+    const p = basePrices[crop];
+    const trnd = trends[crop];
+    tbody.innerHTML += `<tr><td>${cropLabel(crop)}</td><td>₹${p}</td><td class="${trnd}">${trnd==='up'?'▲ rising':'▼ falling'}</td></tr>`;
+    bars.innerHTML += `<div class="bar-row"><div style="width:70px;">${cropLabel(crop)}</div><div class="bar-track"><div class="bar-fill" style="width:${(p/max*100).toFixed(0)}%"></div></div><div>₹${p}</div></div>`;
+  });
+}
+
+/* ---------- Earnings / Account ---------- */
+function statusBadge(status){
+  const map = {Paid:'badgeA', Delivered:'badgeA', Pending:'badgeB', 'In Transit':'badgeB', Scheduled:'badgeC'};
+  const labelMap = {Paid: t('status_accepted'), Pending: t('status_pending')};
+  return `<span class="badge ${map[status]||'badgeB'}">${status}</span>`;
+}
+function renderAccount(){
+  const bank = JSON.parse(localStorage.getItem('faslynk_bank')||'null');
+  const totalDeal = orders.reduce((s,o)=>s+o.amount,0);
+  const pendingPay = orders.filter(o=>o.payment==='Pending').reduce((s,o)=>s+o.amount,0);
+  const totalQty = farmerListings.reduce((s,l)=>{
+    const acc = l.offers.find(o=>o.status==='accepted');
+    return s + (acc ? acc.qty : 0);
+  }, 0);
+  const totalEl = document.getElementById('earn-total');
+  const pendEl = document.getElementById('earn-pending');
+  const qtyEl = document.getElementById('earn-qty');
+  if(totalEl) totalEl.textContent = '₹'+totalDeal.toLocaleString();
+  if(pendEl) pendEl.textContent = '₹'+pendingPay.toLocaleString();
+  if(qtyEl) qtyEl.textContent = totalQty+' Qtl';
+
+  const tbody = document.getElementById('orders-table');
+  if(tbody){
+    tbody.innerHTML='';
+    orders.forEach(o=>{
+      tbody.innerHTML += `<tr><td>${o.id}</td><td>${orderCropLabel(o)}</td><td>${o.buyer}</td><td>₹${o.amount.toLocaleString()}</td><td>${statusBadge(o.payment)}</td><td>${statusBadge(o.transport)}</td></tr>`;
+    });
+  }
+}
+
+/* ---------- Login gate ---------- */
+const demoCreds = {
+  farmer: {user:'farmer', pass:'1234'},
+  buyer: {user:'buyer', pass:'1234'}
+};
+function showLoginTab(role){
+  document.getElementById('login-tab-farmer').classList.toggle('active', role==='farmer');
+  document.getElementById('login-tab-buyer').classList.toggle('active', role==='buyer');
+  document.getElementById('login-farmer-form').style.display = role==='farmer' ? 'block' : 'none';
+  document.getElementById('login-buyer-form').style.display = role==='buyer' ? 'block' : 'none';
+}
+function doLogin(role){
+  const isHi = currentLang==='hi';
+  const user = document.getElementById('login-'+role+'-user').value.trim();
+  const pass = document.getElementById('login-'+role+'-pass').value.trim();
+  const errEl = document.getElementById('login-'+role+'-error');
+  if(user===demoCreds[role].user && pass===demoCreds[role].pass){
+    document.getElementById('login-screen').style.display='none';
+    switchRole(role);
+    errEl.classList.remove('show');
+  } else {
+    errEl.textContent = isHi
+      ? 'गलत यूज़रनेम या पासवर्ड। कृपया नीचे दिए डेमो विवरण का उपयोग करें।'
+      : 'Incorrect username or password. Please use the demo details below.';
+    errEl.classList.add('show');
+  }
+}
+function logout(){
+  document.getElementById('login-screen').style.display='flex';
+}
+
+/* ---------- Initial load ---------- */
+activateTab('farmer');
+setLang('hi');
+</script>
+</body>
+</html>
